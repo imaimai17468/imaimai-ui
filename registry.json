@@ -1,0 +1,20 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry.json",
+	"name": "imaimai-ui",
+	"homepage": "https://imaimai-ui.vercel.app",
+	"items": [
+		{
+			"name": "multi-select-combobox",
+			"type": "registry:ui",
+			"title": "Multi Select Combobox",
+			"description": "A searchable multi-select combobox component with badge display",
+			"registryDependencies": ["button", "command", "popover", "badge"],
+			"files": [
+				{
+					"path": "src/components/registry/multi-select-combobox.tsx",
+					"type": "registry:component"
+				}
+			]
+		}
+	]
+}
