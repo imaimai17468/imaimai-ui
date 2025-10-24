@@ -5,12 +5,13 @@
       "args": ["-y", "@upstash/context7-mcp@latest"]
     },
     "serena": {
-      "command": "/abs/path/to/uvx",
+      "command": "uvx",
       "args": [
         "--from",
         "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server"
+        "serena-mcp-server",
+        "--context",
+        "ide-assistant"
       ]
     },
     "chrome-devtools": {
