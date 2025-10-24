@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/shared/header/Header";
 import { ThemeProvider } from "@/components/shared/theme-provider/ThemeProvider";
-import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -35,7 +34,6 @@ export default function RootLayout({
 							<div className="container w-full">{children}</div>
 						</div>
 					</div>
-					<Toaster richColors position="top-center" />
 				</ThemeProvider>
 			</body>
 		</html>

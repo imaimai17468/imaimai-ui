@@ -1,11 +1,7 @@
 import Link from "next/link";
 import { ModeToggle } from "@/components/shared/mode-toggle/ModeToggle";
-import { fetchCurrentUser } from "@/gateways/user";
-import { AuthNavigation } from "./auth-navigation/AuthNavigation";
 
-export const Header = async () => {
-	const user = await fetchCurrentUser();
-
+export const Header = () => {
 	return (
 		<header className="sticky top-0 z-50 bg-transparent backdrop-blur-md">
 			<div className="flex items-center justify-between px-6 py-6">
@@ -22,7 +18,6 @@ export const Header = async () => {
 						Link2
 					</Link>
 					<ModeToggle />
-					<AuthNavigation user={user} />
 				</div>
 			</div>
 		</header>
