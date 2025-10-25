@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { Header } from "@/components/shared/header/Header";
 import { ThemeProvider } from "@/components/shared/theme-provider/ThemeProvider";
 
@@ -61,6 +62,7 @@ export default function RootLayout({
 						</div>
 					</div>
 				</ThemeProvider>
+				<Analytics />
 			</body>
 		</html>
 	);
