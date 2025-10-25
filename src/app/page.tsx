@@ -59,9 +59,11 @@ export default async function Home({ searchParams }: PageProps) {
 								imaimai UI
 							</h1>
 							<p className="max-w-2xl text-lg text-muted-foreground">
-								他のライブラリにない、必要なコンポーネントを集めたレジストリ。
+								他のライブラリには無い、実装が面倒なコンポーネントを集めました。
 								<br />
-								shadcn/ui互換のCLIで簡単にインストール可能。
+								網羅的なライブラリではないので過度な期待はしないでください。
+								<br />
+								欲しいニッチなコンポーネントがあれば、issueでリクエストしてください。
 							</p>
 							<div className="flex items-center gap-4 pt-4">
 								<Button variant="outline" size="lg" asChild>
