@@ -15,6 +15,19 @@
 					"type": "registry:component"
 				}
 			]
+		},
+		{
+			"name": "ios-clock-picker",
+			"type": "registry:ui",
+			"title": "iOS Clock Picker",
+			"description": "An iOS-style 3D cylindrical clock picker with smooth scrolling wheels and drag interactions",
+			"dependencies": ["motion"],
+			"files": [
+				{
+					"path": "src/components/registry/ios-clock-picker.tsx",
+					"type": "registry:component"
+				}
+			]
 		}
 	]
 }

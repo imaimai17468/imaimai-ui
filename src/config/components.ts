@@ -118,6 +118,51 @@ export default function Example() {
 		],
 		registryDependencies: ["button", "command", "popover", "badge"],
 	},
+	{
+		slug: "ios-clock-picker",
+		name: "iOS Clock Picker",
+		category: "form",
+		description:
+			"iOS風の3D円筒形時計ピッカーコンポーネント。スムーズなスクロールホイールとドラッグ操作で時刻を選択できます。",
+		registryName: "ios-clock-picker",
+		demoProps: {
+			value: "13:30",
+		},
+		codeExample: `import { IosClockPicker } from "@/components/ios-clock-picker";
+import { useState } from "react";
+
+export default function Example() {
+  const [time, setTime] = useState("13:30");
+
+  return (
+    <IosClockPicker
+      value={time}
+      onChange={setTime}
+    />
+  );
+}`,
+		props: [
+			{
+				name: "value",
+				type: "string",
+				required: true,
+				description: '選択された時刻（HH:mm形式、24時間表記）。例: "13:30"',
+			},
+			{
+				name: "onChange",
+				type: "(value: string) => void",
+				required: true,
+				description: "時刻が変更されたときに呼ばれるコールバック関数。",
+			},
+			{
+				name: "className",
+				type: "string",
+				required: false,
+				description: "追加のCSSクラス名。",
+			},
+		],
+		dependencies: ["motion"],
+	},
 ];
 
 // カテゴリごとにグループ化

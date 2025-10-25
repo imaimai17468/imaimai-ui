@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IosClockPicker } from "@/components/registry/ios-clock-picker";
 import { MultiSelectCombobox } from "@/components/registry/multi-select-combobox";
 import type { ComponentConfig } from "@/config/components";
 
@@ -14,9 +15,11 @@ interface TabViewProps {
  */
 export function TabView({ component }: TabViewProps) {
 	// デモ用の状態管理
-	// 現在はMultiSelectComboboxのみサポート
 	const [selected, setSelected] = useState<string[]>(
 		(component.demoProps.selected as string[]) || [],
+	);
+	const [time, setTime] = useState<string>(
+		(component.demoProps.value as string) || "13:30",
 	);
 
 	return (
@@ -40,6 +43,10 @@ export function TabView({ component }: TabViewProps) {
 							onChange={setSelected}
 						/>
 					)}
+
+					{component.slug === "ios-clock-picker" && (
+						<IosClockPicker value={time} onChange={setTime} />
+					)}
 				</div>
 			</div>
 
@@ -50,6 +57,13 @@ export function TabView({ component }: TabViewProps) {
 					<code className="font-mono text-sm">
 						{JSON.stringify(selected, null, 2)}
 					</code>
+				</div>
+			)}
+
+			{component.slug === "ios-clock-picker" && (
+				<div className="rounded-lg border bg-muted/50 p-4">
+					<p className="mb-2 font-medium text-sm">選択されている時刻:</p>
+					<code className="font-mono text-sm">{time}</code>
 				</div>
 			)}
 		</div>
