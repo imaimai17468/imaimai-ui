@@ -30,6 +30,8 @@ interface WheelProps {
 	className?: string;
 	/** 無限ループを有効化 */
 	enableInfiniteLoop?: boolean;
+	/** アイテムの高さ（px）- 指定しない場合はデフォルト値 */
+	itemHeight?: number;
 }
 
 /** アイテムの高さ（px） */
@@ -50,19 +52,20 @@ function Wheel({
 	onSelect,
 	className,
 	enableInfiniteLoop = true,
+	itemHeight = ITEM_HEIGHT,
 }: WheelProps) {
 	const itemsLength = items.length;
 	// 各アイテムの角度（アイテム数に基づく）
 	const itemAngle = 360 / itemsLength;
 
 	// 単一のy値（ドラッグと表示で共通）
-	const y = useMotionValue(-selectedIndex * ITEM_HEIGHT);
+	const y = useMotionValue(-selectedIndex * itemHeight);
 	const [isDragging, setIsDragging] = useState(false);
 	const [startY, setStartY] = useState(0);
 
 	// y値からrotation角度への変換
 	const rotation = useTransform(y, (latest) => {
-		const index = -latest / ITEM_HEIGHT;
+		const index = -latest / itemHeight;
 		return index * itemAngle;
 	});
 
@@ -74,14 +77,14 @@ function Wheel({
 	// 選択インデックスが変わったときにアニメーション
 	useEffect(() => {
 		if (!isDragging) {
-			const targetY = -selectedIndex * ITEM_HEIGHT;
+			const targetY = -selectedIndex * itemHeight;
 			animate(y, targetY, {
 				type: "spring",
 				stiffness: 300,
 				damping: 30,
 			});
 		}
-	}, [selectedIndex, y, isDragging]);
+	}, [selectedIndex, y, isDragging, itemHeight]);
 
 	// ポインターダウン
 	const handlePointerDown = (e: React.PointerEvent) => {
@@ -104,7 +107,7 @@ function Wheel({
 		if (!isDragging) return;
 
 		const currentY = y.get();
-		let index = Math.round(-currentY / ITEM_HEIGHT);
+		let index = Math.round(-currentY / itemHeight);
 
 		if (enableInfiniteLoop) {
 			// 無限ループ：Modulo演算でインデックスを正規化
@@ -115,7 +118,7 @@ function Wheel({
 		}
 
 		// スナップアニメーション
-		const targetY = -index * ITEM_HEIGHT;
+		const targetY = -index * itemHeight;
 		animate(y, targetY, {
 			type: "spring",
 			stiffness: 300,
@@ -150,8 +153,8 @@ function Wheel({
 			<motion.div
 				className="pointer-events-none absolute top-1/2 right-0 left-0"
 				style={{
-					height: `${ITEM_HEIGHT}px`,
-					marginTop: `-${ITEM_HEIGHT / 2}px`,
+					height: `${itemHeight}px`,
+					marginTop: `-${itemHeight / 2}px`,
 					transformStyle: "preserve-3d",
 					transform: wheelTransform,
 				}}
@@ -166,7 +169,7 @@ function Wheel({
 							key={`${index}-${item}`}
 							className="pointer-events-none absolute inset-0 flex items-center justify-center"
 							style={{
-								height: `${ITEM_HEIGHT}px`,
+								height: `${itemHeight}px`,
 								transformStyle: "preserve-3d",
 								backfaceVisibility: "hidden",
 								transform: `rotateX(${angle}deg) translateZ(${-CYLINDER_RADIUS}px)`,
@@ -272,6 +275,7 @@ export function IosClockPicker({
 				selectedIndex={minutes}
 				onSelect={handleMinuteChange}
 				enableInfiniteLoop={true}
+				itemHeight={60}
 			/>
 
 			{/* AM/PM */}
