@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import type { ComponentCategory } from "@/config/components";
 import { componentsByCategory } from "@/config/components";
 import { cn } from "@/lib/utils";
@@ -20,6 +20,8 @@ const categoryLabels: Record<ComponentCategory, string> = {
  */
 export function DocsSidebar() {
 	const pathname = usePathname();
+	const searchParams = useSearchParams();
+	const currentComponent = searchParams.get("component");
 
 	return (
 		<aside className="w-64 border-r bg-sidebar pr-4 pb-8">
@@ -31,7 +33,7 @@ export function DocsSidebar() {
 							href="/"
 							className={cn(
 								"block rounded-md px-3 py-2 text-sm transition-colors",
-								pathname === "/"
+								pathname === "/" && !currentComponent
 									? "bg-sidebar-accent text-sidebar-accent-foreground"
 									: "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
 							)}
@@ -50,11 +52,7 @@ export function DocsSidebar() {
 								<ul className="space-y-1">
 									{components.map((component) => {
 										const href = `/?component=${component.slug}`;
-										const isActive =
-											pathname === "/" &&
-											new URLSearchParams(window.location.search).get(
-												"component",
-											) === component.slug;
+										const isActive = currentComponent === component.slug;
 
 										return (
 											<li key={component.slug}>
