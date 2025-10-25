@@ -1,22 +1,23 @@
-"use client";
-
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-import { ComponentHeader } from "@/components/docs/component-header";
-import { ComponentTabs } from "@/components/docs/component-tabs";
-import { DocsSidebar } from "@/components/docs/docs-sidebar";
+import { ComponentDetailPage } from "@/components/docs/component-detail-page/ComponentDetailPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { components, getComponentBySlug } from "@/config/components";
 
+interface PageProps {
+	searchParams: Promise<{
+		component?: string;
+	}>;
+}
+
 /**
- * ページコンテンツ（useSearchParams使用）
+ * ルートページ（サーバーコンポーネント）
+ * searchParams を使用してクエリパラメータを取得
  */
-function PageContent() {
-	const searchParams = useSearchParams();
-	const componentSlug = searchParams.get("component");
+export default async function Home({ searchParams }: PageProps) {
+	const params = await searchParams;
+	const componentSlug = params.component;
 
 	// コンポーネント詳細表示
 	if (componentSlug) {
@@ -39,19 +40,11 @@ function PageContent() {
 			);
 		}
 
-		// サイドバー付きコンポーネント詳細
-		return (
-			<div className="flex w-full gap-8">
-				<DocsSidebar />
-				<main className="flex-1 space-y-8 pt-4 pb-16">
-					<ComponentHeader component={component} />
-					<ComponentTabs component={component} />
-				</main>
-			</div>
-		);
+		// サイドバー付きコンポーネント詳細（クライアントコンポーネント）
+		return <ComponentDetailPage component={component} />;
 	}
 
-	// ランディングページ
+	// ランディングページ（サーバーコンポーネント）
 	return (
 		<div className="space-y-20">
 			{/* ヒーローセクション */}
@@ -142,17 +135,5 @@ function PageContent() {
 				</div>
 			</section>
 		</div>
-	);
-}
-
-/**
- * ルートページ
- * Suspenseでラップして useSearchParams を使用
- */
-export default function Home() {
-	return (
-		<Suspense fallback={<div className="p-8">Loading...</div>}>
-			<PageContent />
-		</Suspense>
 	);
 }
