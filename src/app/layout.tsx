@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { DocsSidebar } from "@/components/docs/docs-sidebar";
@@ -58,7 +59,9 @@ export default function RootLayout({
 					disableTransitionOnChange
 				>
 					<SidebarProvider>
-						<DocsSidebar />
+						<Suspense fallback={<div className="w-64 border-r bg-sidebar" />}>
+							<DocsSidebar />
+						</Suspense>
 						<SidebarInset>
 							<Header />
 							{children}
