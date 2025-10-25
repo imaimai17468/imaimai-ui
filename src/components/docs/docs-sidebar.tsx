@@ -24,7 +24,7 @@ export function DocsSidebar() {
 	const currentComponent = searchParams.get("component");
 
 	return (
-		<aside className="w-64 border-r bg-sidebar pr-4 pb-8">
+		<aside className="w-64 border-r bg-sidebar p-4">
 			<div className="sticky top-20">
 				<nav className="space-y-6">
 					{/* ホームリンク */}
