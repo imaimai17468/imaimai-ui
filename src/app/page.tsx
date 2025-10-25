@@ -56,7 +56,7 @@ export default async function Home({ searchParams }: PageProps) {
 					<div className="space-y-8">
 						<section className="space-y-4 pt-12">
 							<h1 className="font-bold text-5xl tracking-tight md:text-6xl">
-								imaimai-ui
+								imaimai UI
 							</h1>
 							<p className="max-w-2xl text-lg text-muted-foreground">
 								他のライブラリにない、必要なコンポーネントを集めたレジストリ。
