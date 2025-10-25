@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { Header } from "@/components/shared/header/Header";
 import { ThemeProvider } from "@/components/shared/theme-provider/ThemeProvider";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://imaimai-ui.vercel.app"),
@@ -55,12 +57,13 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange
 				>
-					<div className="flex min-h-dvh flex-col gap-4">
-						<Header />
-						<div className="flex w-full flex-1 justify-center px-6 md:px-4">
-							<div className="container w-full">{children}</div>
-						</div>
-					</div>
+					<SidebarProvider>
+						<DocsSidebar />
+						<SidebarInset>
+							<Header />
+							{children}
+						</SidebarInset>
+					</SidebarProvider>
 				</ThemeProvider>
 				<Analytics />
 			</body>

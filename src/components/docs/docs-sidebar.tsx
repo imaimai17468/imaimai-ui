@@ -1,10 +1,21 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import {
+	Sidebar,
+	SidebarContent,
+	SidebarGroup,
+	SidebarGroupContent,
+	SidebarGroupLabel,
+	SidebarHeader,
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+} from "@/components/ui/sidebar";
 import type { ComponentCategory } from "@/config/components";
 import { componentsByCategory } from "@/config/components";
-import { cn } from "@/lib/utils";
 
 // カテゴリ表示名のマッピング
 const categoryLabels: Record<ComponentCategory, string> = {
@@ -24,58 +35,59 @@ export function DocsSidebar() {
 	const currentComponent = searchParams.get("component");
 
 	return (
-		<aside className="w-64 border-r bg-sidebar p-4">
-			<div className="sticky top-20">
-				<nav className="space-y-6">
-					{/* ホームリンク */}
-					<div>
-						<Link
-							href="/"
-							className={cn(
-								"block rounded-md px-3 py-2 text-sm transition-colors",
-								pathname === "/" && !currentComponent
-									? "bg-sidebar-accent text-sidebar-accent-foreground"
-									: "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-							)}
-						>
-							ホーム
-						</Link>
-					</div>
+		<Sidebar>
+			<SidebarHeader>
+				<Link href="/" className="flex items-center gap-2 px-2 py-4">
+					<Image
+						src="/app-icon.png"
+						alt="imaimai UI"
+						width={32}
+						height={32}
+						className="rounded"
+					/>
+					<span className="font-semibold text-lg">imaimai UI</span>
+				</Link>
+			</SidebarHeader>
+			<SidebarContent>
+				{/* ホームリンク */}
+				<SidebarGroup>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SidebarMenuButton
+								asChild
+								isActive={pathname === "/" && !currentComponent}
+							>
+								<Link href="/">ホーム</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroup>
 
-					{/* カテゴリ別コンポーネント一覧 */}
-					{Object.entries(componentsByCategory).map(
-						([category, components]) => (
-							<div key={category}>
-								<h3 className="mb-2 px-3 font-medium text-sidebar-foreground text-xs uppercase tracking-wider">
-									{categoryLabels[category as ComponentCategory]}
-								</h3>
-								<ul className="space-y-1">
-									{components.map((component) => {
-										const href = `/?component=${component.slug}`;
-										const isActive = currentComponent === component.slug;
+				{/* カテゴリ別コンポーネント一覧 */}
+				{Object.entries(componentsByCategory).map(([category, components]) => (
+					<SidebarGroup key={category}>
+						<SidebarGroupLabel>
+							{categoryLabels[category as ComponentCategory]}
+						</SidebarGroupLabel>
+						<SidebarGroupContent>
+							<SidebarMenu>
+								{components.map((component) => {
+									const href = `/?component=${component.slug}`;
+									const isActive = currentComponent === component.slug;
 
-										return (
-											<li key={component.slug}>
-												<Link
-													href={href}
-													className={cn(
-														"block rounded-md px-3 py-2 text-sm transition-colors",
-														isActive
-															? "bg-sidebar-accent font-medium text-sidebar-accent-foreground"
-															: "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-													)}
-												>
-													{component.name}
-												</Link>
-											</li>
-										);
-									})}
-								</ul>
-							</div>
-						),
-					)}
-				</nav>
-			</div>
-		</aside>
+									return (
+										<SidebarMenuItem key={component.slug}>
+											<SidebarMenuButton asChild isActive={isActive}>
+												<Link href={href}>{component.name}</Link>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+									);
+								})}
+							</SidebarMenu>
+						</SidebarGroupContent>
+					</SidebarGroup>
+				))}
+			</SidebarContent>
+		</Sidebar>
 	);
 }

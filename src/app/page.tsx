@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ComponentHeader } from "@/components/docs/component-header";
 import { ComponentTabs } from "@/components/docs/component-tabs";
-import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { Button } from "@/components/ui/button";
 import { getComponentBySlug } from "@/config/components";
 
@@ -40,46 +39,43 @@ export default async function Home({ searchParams }: PageProps) {
 		);
 	}
 
-	// サイドバー付きレイアウト（常に表示）
+	// メインコンテンツ
 	return (
-		<div className="flex h-full w-full gap-8">
-			<DocsSidebar />
-			<main className="flex-1 space-y-8 pt-4 pb-16">
-				{component ? (
-					// コンポーネント詳細表示
-					<>
-						<ComponentHeader component={component} />
-						<ComponentTabs component={component} />
-					</>
-				) : (
-					// ランディングページ（最小限の説明）
-					<div className="space-y-8">
-						<section className="space-y-4 pt-12">
-							<h1 className="font-bold text-5xl tracking-tight md:text-6xl">
-								imaimai UI
-							</h1>
-							<p className="max-w-2xl text-lg text-muted-foreground">
-								他のライブラリには無い、実装が面倒なコンポーネントを集めました。
-								<br />
-								網羅的なライブラリではないので過度な期待はしないでください。
-								<br />
-								欲しいニッチなコンポーネントがあれば、issueでリクエストしてください。
-							</p>
-							<div className="flex items-center gap-4 pt-4">
-								<Button variant="outline" size="lg" asChild>
-									<a
-										href="https://github.com/imaimai17468/imaimai-ui"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										GitHubで見る
-									</a>
-								</Button>
-							</div>
-						</section>
-					</div>
-				)}
-			</main>
-		</div>
+		<main className="flex-1 space-y-8 px-6 pt-4 pb-16">
+			{component ? (
+				// コンポーネント詳細表示
+				<>
+					<ComponentHeader component={component} />
+					<ComponentTabs component={component} />
+				</>
+			) : (
+				// ランディングページ（最小限の説明）
+				<div className="space-y-8">
+					<section className="space-y-4 pt-12">
+						<h1 className="font-bold text-5xl tracking-tight md:text-6xl">
+							imaimai UI
+						</h1>
+						<p className="max-w-2xl text-lg text-muted-foreground">
+							他のライブラリには無い、実装が面倒なコンポーネントを集めました。
+							<br />
+							網羅的なライブラリではないので過度な期待はしないでください。
+							<br />
+							欲しいニッチなコンポーネントがあれば、issueでリクエストしてください。
+						</p>
+						<div className="flex items-center gap-4 pt-4">
+							<Button variant="outline" size="lg" asChild>
+								<a
+									href="https://github.com/imaimai17468/imaimai-ui"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									GitHubで見る
+								</a>
+							</Button>
+						</div>
+					</section>
+				</div>
+			)}
+		</main>
 	);
 }
