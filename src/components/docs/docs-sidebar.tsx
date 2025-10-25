@@ -49,8 +49,12 @@ export function DocsSidebar() {
 								</h3>
 								<ul className="space-y-1">
 									{components.map((component) => {
-										const href = `/components/${component.slug}`;
-										const isActive = pathname === href;
+										const href = `/?component=${component.slug}`;
+										const isActive =
+											pathname === "/" &&
+											new URLSearchParams(window.location.search).get(
+												"component",
+											) === component.slug;
 
 										return (
 											<li key={component.slug}>

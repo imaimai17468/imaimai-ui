@@ -1,10 +1,57 @@
+"use client";
+
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { ComponentHeader } from "@/components/docs/component-header";
+import { ComponentTabs } from "@/components/docs/component-tabs";
+import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { components } from "@/config/components";
+import { components, getComponentBySlug } from "@/config/components";
 
-export default function Home() {
+/**
+ * ページコンテンツ（useSearchParams使用）
+ */
+function PageContent() {
+	const searchParams = useSearchParams();
+	const componentSlug = searchParams.get("component");
+
+	// コンポーネント詳細表示
+	if (componentSlug) {
+		const component = getComponentBySlug(componentSlug);
+
+		// 存在しないコンポーネント
+		if (!component) {
+			return (
+				<div className="flex min-h-[50vh] items-center justify-center">
+					<div className="text-center">
+						<h1 className="mb-4 font-bold text-4xl">404</h1>
+						<p className="mb-6 text-muted-foreground">
+							コンポーネントが見つかりませんでした
+						</p>
+						<Button asChild>
+							<Link href="/">トップに戻る</Link>
+						</Button>
+					</div>
+				</div>
+			);
+		}
+
+		// サイドバー付きコンポーネント詳細
+		return (
+			<div className="flex w-full gap-8">
+				<DocsSidebar />
+				<main className="flex-1 space-y-8 pt-4 pb-16">
+					<ComponentHeader component={component} />
+					<ComponentTabs component={component} />
+				</main>
+			</div>
+		);
+	}
+
+	// ランディングページ
 	return (
 		<div className="space-y-20">
 			{/* ヒーローセクション */}
@@ -19,7 +66,7 @@ export default function Home() {
 				</p>
 				<div className="flex items-center justify-center gap-4 pt-4">
 					<Button asChild size="lg">
-						<Link href={`/components/${components[0].slug}`}>
+						<Link href={`/?component=${components[0].slug}`}>
 							コンポーネントを見る
 							<ArrowRight className="ml-2 h-4 w-4" />
 						</Link>
@@ -69,7 +116,7 @@ export default function Home() {
 					{components.map((component) => (
 						<Link
 							key={component.slug}
-							href={`/components/${component.slug}`}
+							href={`/?component=${component.slug}`}
 							className="group block rounded-lg border bg-card p-6 transition-colors hover:border-primary hover:bg-accent"
 						>
 							<div className="space-y-2">
@@ -95,5 +142,17 @@ export default function Home() {
 				</div>
 			</section>
 		</div>
+	);
+}
+
+/**
+ * ルートページ
+ * Suspenseでラップして useSearchParams を使用
+ */
+export default function Home() {
+	return (
+		<Suspense fallback={<div className="p-8">Loading...</div>}>
+			<PageContent />
+		</Suspense>
 	);
 }
