@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun run registry:build && next build",
     "start": "next start",
     "check": "biome check",
     "check:fix": "biome check --write --unsafe",
