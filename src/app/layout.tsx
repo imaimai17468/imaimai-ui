@@ -4,8 +4,34 @@ import { Header } from "@/components/shared/header/Header";
 import { ThemeProvider } from "@/components/shared/theme-provider/ThemeProvider";
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://imaimai-ui.vercel.app"),
 	title: "imaimai UI",
 	description: "他のライブラリにない、必要なコンポーネントを集めたレジストリ",
+	icons: {
+		icon: "/app-icon.png",
+		apple: "/app-icon.png",
+	},
+	openGraph: {
+		title: "imaimai UI",
+		description: "他のライブラリにない、必要なコンポーネントを集めたレジストリ",
+		siteName: "imaimai UI",
+		type: "website",
+		url: "https://imaimai-ui.vercel.app",
+		images: [
+			{
+				url: "/app-ogp.png",
+				width: 1200,
+				height: 630,
+				alt: "imaimai UI",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "imaimai UI",
+		description: "他のライブラリにない、必要なコンポーネントを集めたレジストリ",
+		images: ["/app-ogp.png"],
+	},
 };
 
 export default function RootLayout({
