@@ -42,7 +42,7 @@ export default async function Home({ searchParams }: PageProps) {
 
 	// サイドバー付きレイアウト（常に表示）
 	return (
-		<div className="flex w-full gap-8">
+		<div className="flex h-full w-full gap-8">
 			<DocsSidebar />
 			<main className="flex-1 space-y-8 pt-4 pb-16">
 				{component ? (

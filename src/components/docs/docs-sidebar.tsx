@@ -25,7 +25,7 @@ export function DocsSidebar() {
 
 	return (
 		<aside className="w-64 border-r bg-sidebar pr-4 pb-8">
-			<div className="sticky top-16">
+			<div className="sticky top-20">
 				<nav className="space-y-6">
 					{/* ホームリンク */}
 					<div>

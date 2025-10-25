@@ -76,7 +76,7 @@ export function MultiSelectCombobox({
 										<Badge
 											key={value}
 											variant="secondary"
-											className="font-normal"
+											className="font-normal dark:bg-input"
 										>
 											{label}
 										</Badge>
@@ -133,7 +133,7 @@ export function MultiSelectCombobox({
 											<Badge
 												key={value}
 												variant="secondary"
-												className="gap-1 pr-1"
+												className="gap-1 pr-1 dark:bg-input"
 											>
 												<span>{label}</span>
 												<button
@@ -142,7 +142,7 @@ export function MultiSelectCombobox({
 														e.stopPropagation();
 														handleRemove(value);
 													}}
-													className="ml-1 rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+													className="ml-1 cursor-pointer rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
 													aria-label={`Remove ${label}`}
 												>
 													<X className="h-3 w-3" />
