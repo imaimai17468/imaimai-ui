@@ -15,41 +15,91 @@ interface TabViewProps {
 export function TabView({ component }: TabViewProps) {
 	// デモ用の状態管理
 	// 現在はMultiSelectComboboxのみサポート
-	const [selected, setSelected] = useState<string[]>(
+	const [selectedNoLimit, setSelectedNoLimit] = useState<string[]>(
 		(component.demoProps.selected as string[]) || [],
 	);
+	// バッジ数制限デモ用：デフォルトで4つ選択
+	const [selectedWithLimit, setSelectedWithLimit] = useState<string[]>([
+		"react",
+		"next",
+		"vue",
+		"angular",
+	]);
 
 	return (
-		<div className="space-y-4">
+		<div className="space-y-8">
 			{/* デモ説明 */}
 			<p className="text-muted-foreground text-sm">
 				実際に動作するコンポーネントです。インタラクションを試してみてください。
 			</p>
 
-			{/* デモエリア */}
-			<div className="rounded-lg border bg-card p-8">
-				<div className="mx-auto flex max-w-md items-center justify-center">
-					{component.slug === "multi-select-combobox" && (
-						<MultiSelectCombobox
-							{...(component.demoProps as {
-								options: Array<{ value: string; label: string }>;
-								placeholder?: string;
-								searchPlaceholder?: string;
-							})}
-							selected={selected}
-							onChange={setSelected}
-						/>
-					)}
-				</div>
-			</div>
+			{component.slug === "multi-select-combobox" ? (
+				<>
+					{/* デモ1: maxVisibleItems未指定（全バッジ表示） */}
+					<div className="space-y-4">
+						<h3 className="mb-2 font-semibold text-lg">全バッジ表示</h3>
+						<div className="rounded-lg border bg-card p-8">
+							<div className="mx-auto max-w-md">
+								<MultiSelectCombobox
+									{...(component.demoProps as {
+										options: Array<{ value: string; label: string }>;
+										placeholder?: string;
+										searchPlaceholder?: string;
+									})}
+									selected={selectedNoLimit}
+									onChange={setSelectedNoLimit}
+								/>
+							</div>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">
+								選択されているアイテム:
+							</p>
+							<code className="font-mono text-sm">
+								{JSON.stringify(selectedNoLimit, null, 2)}
+							</code>
+						</div>
+					</div>
 
-			{/* 選択状態の表示 */}
-			{component.slug === "multi-select-combobox" && (
-				<div className="rounded-lg border bg-muted/50 p-4">
-					<p className="mb-2 font-medium text-sm">選択されているアイテム:</p>
-					<code className="font-mono text-sm">
-						{JSON.stringify(selected, null, 2)}
-					</code>
+					{/* デモ2: maxVisibleItems指定（+Nバッジ表示） */}
+					<div className="space-y-4">
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">バッジ数制限</h3>
+							<p className="text-muted-foreground text-sm">
+								maxVisibleItemsを指定することで、表示するバッジ数を制限できます。残りは
+								"+N" バッジで表示されます。
+							</p>
+						</div>
+						<div className="rounded-lg border bg-card p-8">
+							<div className="mx-auto max-w-md">
+								<MultiSelectCombobox
+									{...(component.demoProps as {
+										options: Array<{ value: string; label: string }>;
+										placeholder?: string;
+										searchPlaceholder?: string;
+									})}
+									selected={selectedWithLimit}
+									onChange={setSelectedWithLimit}
+									maxVisibleItems={3}
+								/>
+							</div>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">
+								選択されているアイテム:
+							</p>
+							<code className="font-mono text-sm">
+								{JSON.stringify(selectedWithLimit, null, 2)}
+							</code>
+						</div>
+					</div>
+				</>
+			) : (
+				// 他のコンポーネント用のフォールバック
+				<div className="rounded-lg border bg-card p-8">
+					<div className="mx-auto flex max-w-md items-center justify-center">
+						<p className="text-muted-foreground">デモは準備中です</p>
+					</div>
 				</div>
 			)}
 		</div>

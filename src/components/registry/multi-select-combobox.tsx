@@ -31,6 +31,8 @@ export interface MultiSelectComboboxProps {
 	placeholder?: string;
 	searchPlaceholder?: string;
 	className?: string;
+	/** 表示する最大バッジ数。これを超える場合は "+N" バッジで表示 */
+	maxVisibleItems?: number;
 }
 
 export function MultiSelectCombobox({
@@ -40,6 +42,7 @@ export function MultiSelectCombobox({
 	placeholder = "Select items...",
 	searchPlaceholder = "Search...",
 	className,
+	maxVisibleItems,
 }: MultiSelectComboboxProps) {
 	const [open, setOpen] = useState(false);
 
@@ -63,11 +66,15 @@ export function MultiSelectCombobox({
 					<Button
 						variant="outline"
 						aria-expanded={open}
-						className="w-full justify-start gap-2"
+						className="h-auto min-h-10 w-full justify-start gap-2 py-2"
 					>
 						{selected.length > 0 ? (
 							<div className="flex flex-1 flex-wrap gap-1">
-								{selected.map((value) => {
+								{/* maxVisibleItems が指定されている場合は制限、未指定の場合は全表示 */}
+								{(maxVisibleItems
+									? selected.slice(0, maxVisibleItems)
+									: selected
+								).map((value) => {
 									const label = options.find(
 										(option) => option.value === value,
 									)?.label;
@@ -82,6 +89,15 @@ export function MultiSelectCombobox({
 										</Badge>
 									);
 								})}
+								{/* maxVisibleItems が指定されていて、残りがある場合は "+N" バッジで表示 */}
+								{maxVisibleItems && selected.length > maxVisibleItems && (
+									<Badge
+										variant="secondary"
+										className="font-normal dark:bg-input"
+									>
+										+{selected.length - maxVisibleItems}
+									</Badge>
+								)}
 							</div>
 						) : (
 							<span className="flex-1 text-left text-muted-foreground">
