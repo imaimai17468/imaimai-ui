@@ -58,23 +58,27 @@ function generatePageNumbers(
 	}));
 
 	// 現在ページ周辺のページ番号
-	const startPage = Math.max(boundaryCount + 2, currentPage - siblingCount);
+	const startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
 	const endPage = Math.min(
-		totalPages - boundaryCount - 1,
+		totalPages - boundaryCount,
 		currentPage + siblingCount,
 	);
 
-	const middlePages = Array.from(
-		{ length: endPage - startPage + 1 },
-		(_, i) => ({
-			type: "page" as const,
-			value: startPage + i,
-		}),
-	);
+	// middlePagesを生成（firstPages/lastPagesと重複しない範囲）
+	const middlePages: PageItem[] = [];
+	for (let i = startPage; i <= endPage; i++) {
+		// boundaryCountの範囲と重複しないページのみ追加
+		if (i > boundaryCount && i <= totalPages - boundaryCount) {
+			middlePages.push({
+				type: "page" as const,
+				value: i,
+			});
+		}
+	}
 
 	// 省略記号が必要か判定
-	const hasLeftEllipsis = startPage > boundaryCount + 2;
-	const hasRightEllipsis = endPage < totalPages - boundaryCount - 1;
+	const hasLeftEllipsis = startPage > boundaryCount + 1;
+	const hasRightEllipsis = endPage < totalPages - boundaryCount;
 
 	// ページ番号配列を構築
 	const pages: PageItem[] = [...firstPages];
@@ -113,7 +117,7 @@ export function EllipsisPagination({
 	totalPages,
 	onPageChange,
 	siblingCount = 1,
-	boundaryCount = 1,
+	boundaryCount = 3,
 }: EllipsisPaginationProps) {
 	const pages = generatePageNumbers(
 		currentPage,
