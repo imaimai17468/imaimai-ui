@@ -118,6 +118,70 @@ export default function Example() {
 		],
 		registryDependencies: ["button", "command", "popover", "badge"],
 	},
+	{
+		slug: "ellipsis-pagination",
+		name: "Ellipsis Pagination",
+		category: "layout",
+		description:
+			"ページ数が多い時に自動的に省略記号（...）を表示するPaginationコンポーネント。現在ページ周辺とページ境界のページ番号のみを表示します。",
+		registryName: "ellipsis-pagination",
+		demoProps: {
+			currentPage: 5,
+			totalPages: 20,
+		},
+		codeExample: `import { EllipsisPagination } from "@/components/ellipsis-pagination";
+import { useState } from "react";
+
+export default function Example() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 100;
+
+  return (
+    <EllipsisPagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+      siblingCount={1}
+      boundaryCount={1}
+    />
+  );
+}`,
+		props: [
+			{
+				name: "currentPage",
+				type: "number",
+				required: true,
+				description: "現在のページ（1-indexed）。",
+			},
+			{
+				name: "totalPages",
+				type: "number",
+				required: true,
+				description: "総ページ数。",
+			},
+			{
+				name: "onPageChange",
+				type: "(page: number) => void",
+				required: true,
+				description: "ページが変更されたときに呼ばれるコールバック関数。",
+			},
+			{
+				name: "siblingCount",
+				type: "number",
+				required: false,
+				default: "1",
+				description: "現在ページの前後に表示するページ数。",
+			},
+			{
+				name: "boundaryCount",
+				type: "number",
+				required: false,
+				default: "1",
+				description: "最初と最後に表示するページ数。",
+			},
+		],
+		registryDependencies: ["pagination"],
+	},
 ];
 
 // カテゴリごとにグループ化

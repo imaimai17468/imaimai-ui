@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { EllipsisPagination } from "@/components/registry/ellipsis-pagination";
 import { MultiSelectCombobox } from "@/components/registry/multi-select-combobox";
 import type { ComponentConfig } from "@/config/components";
 
@@ -14,7 +15,6 @@ interface TabViewProps {
  */
 export function TabView({ component }: TabViewProps) {
 	// デモ用の状態管理
-	// 現在はMultiSelectComboboxのみサポート
 	const [selectedNoLimit, setSelectedNoLimit] = useState<string[]>(
 		(component.demoProps.selected as string[]) || [],
 	);
@@ -25,6 +25,11 @@ export function TabView({ component }: TabViewProps) {
 		"vue",
 		"angular",
 	]);
+
+	// EllipsisPagination用の状態管理
+	const [currentPage, setCurrentPage] = useState<number>(
+		(component.demoProps.currentPage as number) || 1,
+	);
 
 	return (
 		<div className="space-y-8">
@@ -94,6 +99,43 @@ export function TabView({ component }: TabViewProps) {
 						</div>
 					</div>
 				</>
+			) : component.slug === "ellipsis-pagination" ? (
+				// EllipsisPaginationデモ
+				<div className="space-y-8">
+					<div className="space-y-4">
+						<h3 className="mb-2 font-semibold text-lg">
+							ページ数が少ない場合（10ページ）
+						</h3>
+						<div className="flex justify-center rounded-lg border bg-card p-8">
+							<EllipsisPagination
+								currentPage={currentPage}
+								totalPages={10}
+								onPageChange={setCurrentPage}
+							/>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">現在のページ:</p>
+							<code className="font-mono text-sm">{currentPage}</code>
+						</div>
+					</div>
+
+					<div className="space-y-4">
+						<h3 className="mb-2 font-semibold text-lg">
+							ページ数が多い場合（100ページ）
+						</h3>
+						<div className="flex justify-center rounded-lg border bg-card p-8">
+							<EllipsisPagination
+								currentPage={currentPage}
+								totalPages={100}
+								onPageChange={setCurrentPage}
+							/>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">現在のページ:</p>
+							<code className="font-mono text-sm">{currentPage}</code>
+						</div>
+					</div>
+				</div>
 			) : (
 				// 他のコンポーネント用のフォールバック
 				<div className="rounded-lg border bg-card p-8">
