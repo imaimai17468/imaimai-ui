@@ -192,7 +192,7 @@ export default function Example() {
 		name: "Exponential Pagination",
 		category: "layout",
 		description:
-			"指数的なページジャンプを持つPaginationコンポーネント。ページ数が500以上など非常に多い場合に適しており、1, 2, 3, 4, 8, 16, 32...のように2の累乗でジャンプします。",
+			"指数的なページジャンプを持つPaginationコンポーネント（省略記号なし）。ページ数が500以上など非常に多い場合に適しており、現在ページ周辺は連続表示、その外側は2の累乗（2, 4, 8, 16, 32...）でジャンプします。",
 		registryName: "exponential-pagination",
 		demoProps: {
 			currentPage: 256,

@@ -3,7 +3,6 @@
 import {
 	Pagination,
 	PaginationContent,
-	PaginationEllipsis,
 	PaginationItem,
 	PaginationLink,
 	PaginationNext,
@@ -21,64 +20,63 @@ export interface ExponentialPaginationProps {
 	siblingCount?: number;
 }
 
-type PageItem =
-	| { type: "page"; value: number }
-	| { type: "ellipsis"; id: string };
-
 /**
- * 指数的なページ番号の配列を生成する
- * 例: 1, 2, 3, 4, 8, 16, 32, 64, ...（4以降は2の累乗）
- * 現在ページの前後はsiblingCount分連続で表示
+ * 指数的なページ番号の配列を生成する（省略記号なし）
+ * 現在ページから2の累乗で前後にジャンプ、周辺は連続で表示
  */
 function generateExponentialPages(
 	currentPage: number,
 	totalPages: number,
 	siblingCount: number,
-): PageItem[] {
+): number[] {
 	const pages = new Set<number>();
 
-	// 1, 2, 3 は常に表示
-	pages.add(1);
-	if (totalPages >= 2) pages.add(2);
-	if (totalPages >= 3) pages.add(3);
-
-	// 2の累乗のページ（4以降: 4, 8, 16, 32, 64, ...）
-	let power = 2; // 2^2 = 4 から開始
-	while (2 ** power <= totalPages) {
-		pages.add(2 ** power);
-		power++;
+	// 現在ページの前後siblingCount分を連続表示
+	const rangeStart = Math.max(1, currentPage - siblingCount);
+	const rangeEnd = Math.min(totalPages, currentPage + siblingCount);
+	for (let i = rangeStart; i <= rangeEnd; i++) {
+		pages.add(i);
 	}
 
-	// 現在ページの前後siblingCount分を連続表示
-	for (
-		let i = Math.max(1, currentPage - siblingCount);
-		i <= Math.min(totalPages, currentPage + siblingCount);
-		i++
-	) {
-		pages.add(i);
+	// 前方向: rangeStartより小さい最大の2の累乗を探し、そこから数段階表示
+	let prevPower = 1;
+	while (2 ** prevPower < rangeStart) {
+		prevPower++;
+	}
+	prevPower--; // rangeStartより小さい最大の累乗
+
+	// 前方向に最大4段階の2の累乗を表示
+	for (let i = 0; i < 4 && prevPower >= 0; i++) {
+		const page = 2 ** prevPower;
+		if (page >= 1) {
+			pages.add(page);
+		}
+		prevPower--;
+	}
+
+	// 後方向: rangeEndより大きい最小の2の累乗を探し、そこから数段階表示
+	let nextPower = 0;
+	while (2 ** nextPower <= rangeEnd) {
+		nextPower++;
+	}
+
+	// 後方向に最大4段階の2の累乗を表示
+	for (let i = 0; i < 4 && 2 ** nextPower <= totalPages; i++) {
+		pages.add(2 ** nextPower);
+		nextPower++;
 	}
 
 	// 最後のページは常に表示
 	pages.add(totalPages);
 
-	// ソートして配列に変換
-	const sortedPages = Array.from(pages).sort((a, b) => a - b);
-
-	// 省略記号を挿入（連続していない箇所）
-	const result: PageItem[] = [];
-	for (let i = 0; i < sortedPages.length; i++) {
-		if (i > 0 && sortedPages[i] - sortedPages[i - 1] > 1) {
-			result.push({ type: "ellipsis", id: `ellipsis-${i}` });
-		}
-		result.push({ type: "page", value: sortedPages[i] });
-	}
-
-	return result;
+	// ソートして配列に変換（省略記号なし）
+	return Array.from(pages).sort((a, b) => a - b);
 }
 
 /**
- * 指数的なページジャンプを持つPaginationコンポーネント
+ * 指数的なページジャンプを持つPaginationコンポーネント（省略記号なし）
  * AtCoderのstandingsページのようなページ数が多い場合に適している
+ * 1と2の累乗（2, 4, 8, 16, 32...）を表示し、現在ページ周辺は連続で表示
  *
  * @example
  * ```tsx
@@ -125,24 +123,14 @@ export function ExponentialPagination({
 				</PaginationItem>
 
 				{/* ページ番号 */}
-				{pages.map((item) => (
-					<PaginationItem
-						key={
-							item.type === "page"
-								? `page-${item.value}`
-								: `ellipsis-${item.id}`
-						}
-					>
-						{item.type === "ellipsis" ? (
-							<PaginationEllipsis />
-						) : (
-							<PaginationLink
-								onClick={() => onPageChange(item.value)}
-								isActive={item.value === currentPage}
-							>
-								{item.value}
-							</PaginationLink>
-						)}
+				{pages.map((page) => (
+					<PaginationItem key={`page-${page}`}>
+						<PaginationLink
+							onClick={() => onPageChange(page)}
+							isActive={page === currentPage}
+						>
+							{page}
+						</PaginationLink>
 					</PaginationItem>
 				))}
 

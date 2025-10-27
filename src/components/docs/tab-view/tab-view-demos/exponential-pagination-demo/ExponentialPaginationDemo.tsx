@@ -36,7 +36,7 @@ export function ExponentialPaginationDemo({
 			{/* デモ1: 最初のページ */}
 			<DemoSection
 				title="最初のページ"
-				description="1, 2, 3は常に表示され、4以降は2の累乗（4, 8, 16, 32...）でジャンプします。"
+				description="現在ページの前後3ページは連続で表示され、その外側は2の累乗（4, 8, 16, 32...）でジャンプします。"
 			>
 				<DemoCard centered>
 					<ExponentialPagination
