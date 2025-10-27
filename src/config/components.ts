@@ -176,7 +176,7 @@ export default function Example() {
 				name: "boundaryCount",
 				type: "number",
 				required: false,
-				default: "3",
+				default: "1",
 				description: "最初と最後に表示するページ数。",
 			},
 		],

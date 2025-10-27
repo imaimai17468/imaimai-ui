@@ -57,12 +57,28 @@ function generatePageNumbers(
 		value: totalPages - boundaryCount + i + 1,
 	}));
 
-	// 現在ページ周辺のページ番号
-	const startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
-	const endPage = Math.min(
+	// 現在ページ周辺のページ番号の初期計算
+	let startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
+	let endPage = Math.min(
 		totalPages - boundaryCount,
 		currentPage + siblingCount,
 	);
+
+	// 左側にellipsisがない場合は、endPageを広げる
+	if (startPage <= boundaryCount + 1) {
+		endPage = Math.min(
+			totalPages - boundaryCount,
+			boundaryCount + siblingCount * 2,
+		);
+	}
+
+	// 右側にellipsisがない場合は、startPageを下げる
+	if (endPage >= totalPages - boundaryCount) {
+		startPage = Math.max(
+			boundaryCount + 1,
+			totalPages - boundaryCount - siblingCount * 2,
+		);
+	}
 
 	// middlePagesを生成（firstPages/lastPagesと重複しない範囲）
 	const middlePages: PageItem[] = [];
@@ -117,7 +133,7 @@ export function EllipsisPagination({
 	totalPages,
 	onPageChange,
 	siblingCount = 1,
-	boundaryCount = 3,
+	boundaryCount = 1,
 }: EllipsisPaginationProps) {
 	const pages = generatePageNumbers(
 		currentPage,
