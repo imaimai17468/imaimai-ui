@@ -28,10 +28,14 @@ export function TabView({ component }: TabViewProps) {
 
 	// EllipsisPagination用の状態管理（7ページ用）
 	const [currentPageSmall, setCurrentPageSmall] = useState<number>(1);
-	// EllipsisPagination用の状態管理（100ページ用）
-	const [currentPageLarge, setCurrentPageLarge] = useState<number>(
+	// EllipsisPagination用の状態管理（10ページ・デフォルト設定）
+	const [currentPageDefault, setCurrentPageDefault] = useState<number>(
 		(component.demoProps.currentPage as number) || 1,
 	);
+	// EllipsisPagination用の状態管理（siblingCount=2）
+	const [currentPageSibling2, setCurrentPageSibling2] = useState<number>(1);
+	// EllipsisPagination用の状態管理（boundaryCount=2）
+	const [currentPageBoundary2, setCurrentPageBoundary2] = useState<number>(1);
 
 	return (
 		<div className="space-y-8">
@@ -135,14 +139,46 @@ export function TabView({ component }: TabViewProps) {
 						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
-								currentPage={currentPageLarge}
-								totalPages={100}
-								onPageChange={setCurrentPageLarge}
+								currentPage={currentPageDefault}
+								totalPages={10}
+								onPageChange={setCurrentPageDefault}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
 							<p className="mb-2 font-medium text-sm">現在のページ:</p>
-							<code className="font-mono text-sm">{currentPageLarge}</code>
+							<code className="font-mono text-sm">{currentPageDefault}</code>
+						</div>
+					</div>
+
+					<div className="space-y-4">
+						<h3 className="mb-2 font-semibold text-lg">siblingCount=2</h3>
+						<div className="flex justify-center rounded-lg border bg-card p-8">
+							<EllipsisPagination
+								currentPage={currentPageSibling2}
+								totalPages={10}
+								onPageChange={setCurrentPageSibling2}
+								siblingCount={2}
+							/>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">現在のページ:</p>
+							<code className="font-mono text-sm">{currentPageSibling2}</code>
+						</div>
+					</div>
+
+					<div className="space-y-4">
+						<h3 className="mb-2 font-semibold text-lg">boundaryCount=2</h3>
+						<div className="flex justify-center rounded-lg border bg-card p-8">
+							<EllipsisPagination
+								currentPage={currentPageBoundary2}
+								totalPages={10}
+								onPageChange={setCurrentPageBoundary2}
+								boundaryCount={2}
+							/>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">現在のページ:</p>
+							<code className="font-mono text-sm">{currentPageBoundary2}</code>
 						</div>
 					</div>
 				</div>
