@@ -73,7 +73,7 @@ function PaginationPrevious({
 			aria-label="Go to previous page"
 			size="default"
 			className={cn(
-				"h-7 gap-0.5 px-1.5 text-xs sm:h-9 sm:gap-1 sm:px-2.5 sm:pl-2.5 sm:text-sm",
+				"h-7 w-7 gap-0.5 px-1.5 text-xs sm:h-9 sm:w-auto sm:gap-1 sm:px-2.5 sm:pl-2.5 sm:text-sm",
 				className,
 			)}
 			{...props}
@@ -93,7 +93,7 @@ function PaginationNext({
 			aria-label="Go to next page"
 			size="default"
 			className={cn(
-				"h-7 gap-0.5 px-1.5 text-xs sm:h-9 sm:gap-1 sm:px-2.5 sm:pr-2.5 sm:text-sm",
+				"h-7 w-7 gap-0.5 px-1.5 text-xs sm:h-9 sm:w-auto sm:gap-1 sm:px-2.5 sm:pr-2.5 sm:text-sm",
 				className,
 			)}
 			{...props}
