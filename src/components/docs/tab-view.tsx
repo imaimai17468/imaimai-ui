@@ -33,9 +33,9 @@ export function TabView({ component }: TabViewProps) {
 		(component.demoProps.currentPage as number) || 1,
 	);
 	// EllipsisPagination用の状態管理（siblingCount=2）
-	const [currentPageSibling2, setCurrentPageSibling2] = useState<number>(1);
+	const [currentPageSibling2, setCurrentPageSibling2] = useState<number>(5);
 	// EllipsisPagination用の状態管理（boundaryCount=2）
-	const [currentPageBoundary2, setCurrentPageBoundary2] = useState<number>(1);
+	const [currentPageBoundary2, setCurrentPageBoundary2] = useState<number>(5);
 	// EllipsisPagination用の状態管理（edgeCount=3）
 	const [currentPageEdge3, setCurrentPageEdge3] = useState<number>(1);
 

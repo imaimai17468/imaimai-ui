@@ -71,16 +71,13 @@ function generatePageNumbers(
 	if (edgeCount && edgeCount > 0) {
 		// 左端にいる場合（currentPageが左側に近い）
 		if (currentPage <= boundaryCount + siblingCount) {
-			endPage = Math.min(
-				totalPages - boundaryCount,
-				boundaryCount + siblingCount + edgeCount,
-			);
+			endPage = Math.min(totalPages - boundaryCount, boundaryCount + edgeCount);
 		}
 		// 右端にいる場合（currentPageが右側に近い）
 		else if (currentPage > totalPages - boundaryCount - siblingCount) {
 			startPage = Math.max(
 				boundaryCount + 1,
-				totalPages - boundaryCount - siblingCount - edgeCount + 1,
+				totalPages - boundaryCount - edgeCount + 1,
 			);
 		}
 	}
@@ -139,7 +136,7 @@ export function EllipsisPagination({
 	onPageChange,
 	siblingCount = 1,
 	boundaryCount = 1,
-	edgeCount = 1,
+	edgeCount = 2,
 }: EllipsisPaginationProps) {
 	const pages = generatePageNumbers(
 		currentPage,

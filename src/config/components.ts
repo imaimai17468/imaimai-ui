@@ -183,7 +183,7 @@ export default function Example() {
 				name: "edgeCount",
 				type: "number",
 				required: false,
-				default: "1",
+				default: "2",
 				description: "端（最初または最後のページ）にいる時に表示するページ数。",
 			},
 		],
