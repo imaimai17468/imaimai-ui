@@ -73,10 +73,10 @@ function generatePageNumbers(
 	}
 
 	// 右側にellipsisがない場合は、startPageを下げてendPageを広げる
-	if (endPage >= totalPages - boundaryCount - 1) {
+	if (endPage >= totalPages - boundaryCount) {
 		startPage = Math.max(
 			boundaryCount + 1,
-			totalPages - boundaryCount - siblingCount * 2 - 1,
+			totalPages - boundaryCount - siblingCount,
 		);
 		endPage = totalPages - boundaryCount;
 	}
