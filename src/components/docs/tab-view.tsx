@@ -80,7 +80,7 @@ export function TabView({ component }: TabViewProps) {
 							<h3 className="mb-1 font-semibold text-lg">バッジ数制限</h3>
 							<p className="text-muted-foreground text-sm">
 								maxVisibleItemsを指定することで、表示するバッジ数を制限できます。残りは
-								"+N" バッジで表示されます。
+								&quot;+N&quot; バッジで表示されます。
 							</p>
 						</div>
 						<div className="rounded-lg border bg-card p-8">
