@@ -151,7 +151,12 @@ export function TabView({ component }: TabViewProps) {
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="mb-2 font-semibold text-lg">siblingCount=2</h3>
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">siblingCount</h3>
+							<p className="text-muted-foreground text-sm">
+								現在ページの前後に表示するページ数を指定します。この例では2に設定。
+							</p>
+						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
 								currentPage={currentPageSibling2}
@@ -167,7 +172,12 @@ export function TabView({ component }: TabViewProps) {
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="mb-2 font-semibold text-lg">boundaryCount=2</h3>
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">boundaryCount</h3>
+							<p className="text-muted-foreground text-sm">
+								最初と最後に表示するページ数を指定します。この例では2に設定。
+							</p>
+						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
 								currentPage={currentPageBoundary2}
