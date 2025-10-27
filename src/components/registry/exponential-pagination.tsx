@@ -106,7 +106,7 @@ export function ExponentialPagination({
 	return (
 		<Pagination>
 			{/* モバイルレイアウト */}
-			<div className="flex flex-col gap-2 sm:hidden">
+			<div className="flex w-full flex-col gap-2 sm:hidden">
 				{/* Prev/Nextボタン */}
 				<div className="grid grid-cols-2 gap-2">
 					<PaginationPrevious
@@ -125,7 +125,7 @@ export function ExponentialPagination({
 					/>
 				</div>
 				{/* ページ番号（grid表示） */}
-				<div className="grid grid-cols-4 gap-1">
+				<div className="grid grid-cols-[repeat(auto-fit,minmax(60px,1fr))] gap-1">
 					{pages.map((page) => (
 						<PaginationLink
 							key={`page-${page}`}
