@@ -68,16 +68,17 @@ function generatePageNumbers(
 	if (startPage <= boundaryCount + 1) {
 		endPage = Math.min(
 			totalPages - boundaryCount,
-			boundaryCount + siblingCount * 2,
+			boundaryCount + 1 + siblingCount,
 		);
 	}
 
-	// 右側にellipsisがない場合は、startPageを下げる
-	if (endPage >= totalPages - boundaryCount) {
+	// 右側にellipsisがない場合は、startPageを下げてendPageを広げる
+	if (endPage >= totalPages - boundaryCount - 1) {
 		startPage = Math.max(
 			boundaryCount + 1,
-			totalPages - boundaryCount - siblingCount * 2,
+			totalPages - boundaryCount - siblingCount * 2 - 1,
 		);
+		endPage = totalPages - boundaryCount;
 	}
 
 	// middlePagesを生成（firstPages/lastPagesと重複しない範囲）
