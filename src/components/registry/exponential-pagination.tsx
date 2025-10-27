@@ -31,6 +31,10 @@ function generateExponentialPages(
 ): number[] {
 	const pages = new Set<number>();
 
+	// 1と最終ページは常に表示
+	pages.add(1);
+	pages.add(totalPages);
+
 	// 現在ページの前後siblingCount分を連続表示
 	const rangeStart = Math.max(1, currentPage - siblingCount);
 	const rangeEnd = Math.min(totalPages, currentPage + siblingCount);
@@ -65,9 +69,6 @@ function generateExponentialPages(
 		pages.add(2 ** nextPower);
 		nextPower++;
 	}
-
-	// 最後のページは常に表示
-	pages.add(totalPages);
 
 	// ソートして配列に変換（省略記号なし）
 	return Array.from(pages).sort((a, b) => a - b);
