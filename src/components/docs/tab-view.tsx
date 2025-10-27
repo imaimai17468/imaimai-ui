@@ -26,8 +26,10 @@ export function TabView({ component }: TabViewProps) {
 		"angular",
 	]);
 
-	// EllipsisPagination用の状態管理
-	const [currentPage, setCurrentPage] = useState<number>(
+	// EllipsisPagination用の状態管理（7ページ用）
+	const [currentPageSmall, setCurrentPageSmall] = useState<number>(1);
+	// EllipsisPagination用の状態管理（100ページ用）
+	const [currentPageLarge, setCurrentPageLarge] = useState<number>(
 		(component.demoProps.currentPage as number) || 1,
 	);
 
@@ -105,7 +107,7 @@ export function TabView({ component }: TabViewProps) {
 					<div className="space-y-4">
 						<div>
 							<h3 className="mb-1 font-semibold text-lg">
-								ページ数が少ない場合（7ページ）
+								ページ数が少ない場合
 							</h3>
 							<p className="text-muted-foreground text-sm">
 								省略記号が表示されず、すべてのページ番号が表示されます。
@@ -113,36 +115,34 @@ export function TabView({ component }: TabViewProps) {
 						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
-								currentPage={currentPage}
+								currentPage={currentPageSmall}
 								totalPages={7}
-								onPageChange={setCurrentPage}
+								onPageChange={setCurrentPageSmall}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
 							<p className="mb-2 font-medium text-sm">現在のページ:</p>
-							<code className="font-mono text-sm">{currentPage}</code>
+							<code className="font-mono text-sm">{currentPageSmall}</code>
 						</div>
 					</div>
 
 					<div className="space-y-4">
 						<div>
-							<h3 className="mb-1 font-semibold text-lg">
-								ページ数が多い場合（100ページ）
-							</h3>
+							<h3 className="mb-1 font-semibold text-lg">ページ数が多い場合</h3>
 							<p className="text-muted-foreground text-sm">
 								省略記号（...）が表示され、現在ページ周辺とページ境界のみが表示されます。
 							</p>
 						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
-								currentPage={currentPage}
+								currentPage={currentPageLarge}
 								totalPages={100}
-								onPageChange={setCurrentPage}
+								onPageChange={setCurrentPageLarge}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
 							<p className="mb-2 font-medium text-sm">現在のページ:</p>
-							<code className="font-mono text-sm">{currentPage}</code>
+							<code className="font-mono text-sm">{currentPageLarge}</code>
 						</div>
 					</div>
 				</div>
