@@ -103,13 +103,18 @@ export function TabView({ component }: TabViewProps) {
 				// EllipsisPaginationデモ
 				<div className="space-y-8">
 					<div className="space-y-4">
-						<h3 className="mb-2 font-semibold text-lg">
-							ページ数が少ない場合（10ページ）
-						</h3>
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">
+								ページ数が少ない場合（7ページ）
+							</h3>
+							<p className="text-muted-foreground text-sm">
+								省略記号が表示されず、すべてのページ番号が表示されます。
+							</p>
+						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
 								currentPage={currentPage}
-								totalPages={10}
+								totalPages={7}
 								onPageChange={setCurrentPage}
 							/>
 						</div>
@@ -120,9 +125,14 @@ export function TabView({ component }: TabViewProps) {
 					</div>
 
 					<div className="space-y-4">
-						<h3 className="mb-2 font-semibold text-lg">
-							ページ数が多い場合（100ページ）
-						</h3>
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">
+								ページ数が多い場合（100ページ）
+							</h3>
+							<p className="text-muted-foreground text-sm">
+								省略記号（...）が表示され、現在ページ周辺とページ境界のみが表示されます。
+							</p>
+						</div>
 						<div className="flex justify-center rounded-lg border bg-card p-8">
 							<EllipsisPagination
 								currentPage={currentPage}
