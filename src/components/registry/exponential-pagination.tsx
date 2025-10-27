@@ -131,7 +131,7 @@ export function ExponentialPagination({
 							key={`page-${page}`}
 							onClick={() => onPageChange(page)}
 							isActive={page === currentPage}
-							className="justify-center"
+							className="justify-center justify-self-center"
 						>
 							{page}
 						</PaginationLink>
