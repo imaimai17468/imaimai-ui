@@ -136,7 +136,7 @@ export function EllipsisPagination({
 	onPageChange,
 	siblingCount = 1,
 	boundaryCount = 1,
-	edgeCount = 2,
+	edgeCount = 1,
 }: EllipsisPaginationProps) {
 	const pages = generatePageNumbers(
 		currentPage,

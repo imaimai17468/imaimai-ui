@@ -187,7 +187,6 @@ export function TabView({ component }: TabViewProps) {
 								totalPages={10}
 								onPageChange={setCurrentPageBoundary2}
 								boundaryCount={2}
-								edgeCount={0}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
