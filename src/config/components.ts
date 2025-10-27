@@ -232,6 +232,13 @@ export default function Example() {
 				required: true,
 				description: "ページが変更されたときに呼ばれるコールバック関数。",
 			},
+			{
+				name: "siblingCount",
+				type: "number",
+				required: false,
+				default: "3",
+				description: "現在ページの前後に表示する連続ページ数。",
+			},
 		],
 		registryDependencies: ["pagination"],
 	},

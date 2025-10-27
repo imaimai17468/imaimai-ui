@@ -16,6 +16,8 @@ export interface ExponentialPaginationProps {
 	totalPages: number;
 	/** ページ変更時のコールバック */
 	onPageChange: (page: number) => void;
+	/** 現在ページの前後に表示する連続ページ数（デフォルト: 3） */
+	siblingCount?: number;
 }
 
 /**
@@ -25,16 +27,23 @@ export interface ExponentialPaginationProps {
 function generateExponentialPages(
 	currentPage: number,
 	totalPages: number,
+	siblingCount: number,
 ): number[] {
 	const pages = new Set<number>();
 
-	// 1、現在ページ、最終ページは常に表示
+	// 1と最終ページは常に表示
 	pages.add(1);
-	pages.add(currentPage);
 	pages.add(totalPages);
 
-	// 前方向: currentPageから累積的に2の累乗を引いていく
-	let prevPage = currentPage;
+	// 現在ページの前後siblingCount分を連続表示
+	const rangeStart = Math.max(1, currentPage - siblingCount);
+	const rangeEnd = Math.min(totalPages, currentPage + siblingCount);
+	for (let i = rangeStart; i <= rangeEnd; i++) {
+		pages.add(i);
+	}
+
+	// 前方向: rangeStartから累積的に2の累乗を引いていく
+	let prevPage = rangeStart;
 	let prevPower = 2; // 2^2 = 4 から開始
 	while (prevPage > 1) {
 		prevPage = prevPage - 2 ** prevPower;
@@ -44,8 +53,8 @@ function generateExponentialPages(
 		prevPower++;
 	}
 
-	// 後方向: currentPageから累積的に2の累乗を足していく
-	let nextPage = currentPage;
+	// 後方向: rangeEndから累積的に2の累乗を足していく
+	let nextPage = rangeEnd;
 	let nextPower = 2; // 2^2 = 4 から開始
 	while (nextPage < totalPages) {
 		nextPage = nextPage + 2 ** nextPower;
@@ -70,6 +79,7 @@ function generateExponentialPages(
  *   currentPage={256}
  *   totalPages={500}
  *   onPageChange={(page) => console.log(page)}
+ *   siblingCount={3}
  * />
  * ```
  */
@@ -77,8 +87,9 @@ export function ExponentialPagination({
 	currentPage,
 	totalPages,
 	onPageChange,
+	siblingCount = 3,
 }: ExponentialPaginationProps) {
-	const pages = generateExponentialPages(currentPage, totalPages);
+	const pages = generateExponentialPages(currentPage, totalPages, siblingCount);
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {
@@ -94,8 +105,42 @@ export function ExponentialPagination({
 
 	return (
 		<Pagination>
-			<PaginationContent>
-				{/* 前へボタン */}
+			{/* モバイルレイアウト */}
+			<div className="flex flex-col gap-2 sm:hidden">
+				{/* Prev/Nextボタン */}
+				<div className="grid grid-cols-2 gap-2">
+					<PaginationPrevious
+						onClick={handlePrevious}
+						aria-disabled={currentPage === 1}
+						className={
+							currentPage === 1 ? "pointer-events-none opacity-50" : ""
+						}
+					/>
+					<PaginationNext
+						onClick={handleNext}
+						aria-disabled={currentPage === totalPages}
+						className={
+							currentPage === totalPages ? "pointer-events-none opacity-50" : ""
+						}
+					/>
+				</div>
+				{/* ページ番号（grid表示） */}
+				<div className="grid grid-cols-4 gap-1">
+					{pages.map((page) => (
+						<PaginationLink
+							key={`page-${page}`}
+							onClick={() => onPageChange(page)}
+							isActive={page === currentPage}
+							className="justify-center"
+						>
+							{page}
+						</PaginationLink>
+					))}
+				</div>
+			</div>
+
+			{/* デスクトップレイアウト */}
+			<PaginationContent className="hidden sm:flex">
 				<PaginationItem>
 					<PaginationPrevious
 						onClick={handlePrevious}
@@ -106,7 +151,6 @@ export function ExponentialPagination({
 					/>
 				</PaginationItem>
 
-				{/* ページ番号 */}
 				{pages.map((page) => (
 					<PaginationItem key={`page-${page}`}>
 						<PaginationLink
@@ -118,7 +162,6 @@ export function ExponentialPagination({
 					</PaginationItem>
 				))}
 
-				{/* 次へボタン */}
 				<PaginationItem>
 					<PaginationNext
 						onClick={handleNext}
