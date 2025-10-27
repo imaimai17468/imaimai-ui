@@ -21,6 +21,8 @@ export interface EllipsisPaginationProps {
 	siblingCount?: number;
 	/** 最初と最後に表示するページ数 */
 	boundaryCount?: number;
+	/** 端（最初または最後のページ）にいる時に表示するページ数 */
+	edgeCount?: number;
 }
 
 type PageItem =
@@ -37,6 +39,7 @@ function generatePageNumbers(
 	totalPages: number,
 	siblingCount: number,
 	boundaryCount: number,
+	edgeCount?: number,
 ): PageItem[] {
 	// 総ページ数が少ない場合は全て表示
 	const totalNumbers = siblingCount * 2 + 1 + boundaryCount * 2 + 2; // +2 は省略記号の最大数
@@ -58,11 +61,26 @@ function generatePageNumbers(
 	}));
 
 	// 現在ページ周辺のページ番号を計算
-	const startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
-	const endPage = Math.min(
+	let startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
+	let endPage = Math.min(
 		totalPages - boundaryCount,
 		currentPage + siblingCount,
 	);
+
+	// edgeCountが正の値の場合、端にいる時の表示数を拡張
+	if (edgeCount && edgeCount > 0) {
+		// 左端にいる場合（左側にellipsisがない）
+		if (startPage <= boundaryCount + 1) {
+			endPage = Math.min(totalPages - boundaryCount, boundaryCount + edgeCount);
+		}
+		// 右端にいる場合（右側にellipsisがない）
+		else if (endPage >= totalPages - boundaryCount) {
+			startPage = Math.max(
+				boundaryCount + 1,
+				totalPages - boundaryCount - edgeCount + 1,
+			);
+		}
+	}
 
 	// middlePagesを生成（firstPages/lastPagesと重複しない範囲）
 	const middlePages: PageItem[] = [];
@@ -118,12 +136,14 @@ export function EllipsisPagination({
 	onPageChange,
 	siblingCount = 1,
 	boundaryCount = 1,
+	edgeCount = 2,
 }: EllipsisPaginationProps) {
 	const pages = generatePageNumbers(
 		currentPage,
 		totalPages,
 		siblingCount,
 		boundaryCount,
+		edgeCount,
 	);
 
 	const handlePrevious = () => {

@@ -179,6 +179,13 @@ export default function Example() {
 				default: "1",
 				description: "最初と最後に表示するページ数。",
 			},
+			{
+				name: "edgeCount",
+				type: "number",
+				required: false,
+				default: "2",
+				description: "端（最初または最後のページ）にいる時に表示するページ数。",
+			},
 		],
 		registryDependencies: ["pagination"],
 	},

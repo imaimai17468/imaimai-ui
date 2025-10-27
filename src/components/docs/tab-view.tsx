@@ -36,6 +36,8 @@ export function TabView({ component }: TabViewProps) {
 	const [currentPageSibling2, setCurrentPageSibling2] = useState<number>(1);
 	// EllipsisPagination用の状態管理（boundaryCount=2）
 	const [currentPageBoundary2, setCurrentPageBoundary2] = useState<number>(1);
+	// EllipsisPagination用の状態管理（edgeCount=3）
+	const [currentPageEdge3, setCurrentPageEdge3] = useState<number>(1);
 
 	return (
 		<div className="space-y-8">
@@ -163,6 +165,7 @@ export function TabView({ component }: TabViewProps) {
 								totalPages={10}
 								onPageChange={setCurrentPageSibling2}
 								siblingCount={2}
+								edgeCount={0}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
@@ -184,11 +187,33 @@ export function TabView({ component }: TabViewProps) {
 								totalPages={10}
 								onPageChange={setCurrentPageBoundary2}
 								boundaryCount={2}
+								edgeCount={0}
 							/>
 						</div>
 						<div className="rounded-lg border bg-muted/50 p-4">
 							<p className="mb-2 font-medium text-sm">現在のページ:</p>
 							<code className="font-mono text-sm">{currentPageBoundary2}</code>
+						</div>
+					</div>
+
+					<div className="space-y-4">
+						<div>
+							<h3 className="mb-1 font-semibold text-lg">edgeCount</h3>
+							<p className="text-muted-foreground text-sm">
+								端（最初または最後のページ）にいる時に表示するページ数を指定します。この例では3に設定。
+							</p>
+						</div>
+						<div className="flex justify-center rounded-lg border bg-card p-8">
+							<EllipsisPagination
+								currentPage={currentPageEdge3}
+								totalPages={10}
+								onPageChange={setCurrentPageEdge3}
+								edgeCount={3}
+							/>
+						</div>
+						<div className="rounded-lg border bg-muted/50 p-4">
+							<p className="mb-2 font-medium text-sm">現在のページ:</p>
+							<code className="font-mono text-sm">{currentPageEdge3}</code>
 						</div>
 					</div>
 				</div>
