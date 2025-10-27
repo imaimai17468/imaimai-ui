@@ -2,6 +2,7 @@ import type { ComponentConfig } from "@/config/components";
 import { DefaultDemo } from "./default-demo/DefaultDemo";
 import { EllipsisPaginationDemo } from "./ellipsis-pagination-demo/EllipsisPaginationDemo";
 import { ExponentialPaginationDemo } from "./exponential-pagination-demo/ExponentialPaginationDemo";
+import { IconTransitionToggleDemo } from "./icon-transition-toggle-demo/IconTransitionToggleDemo";
 import { MultiSelectComboboxDemo } from "./multi-select-combobox-demo/MultiSelectComboboxDemo";
 
 /**
@@ -24,6 +25,7 @@ export const demoRegistry: Record<string, DemoComponent> = {
 	"multi-select-combobox": MultiSelectComboboxDemo,
 	"ellipsis-pagination": EllipsisPaginationDemo,
 	"exponential-pagination": ExponentialPaginationDemo,
+	"icon-transition-toggle": IconTransitionToggleDemo,
 };
 
 /**

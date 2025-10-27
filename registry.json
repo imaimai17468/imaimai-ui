@@ -41,6 +41,19 @@
 					"type": "registry:component"
 				}
 			]
+		},
+		{
+			"name": "icon-transition-toggle",
+			"type": "registry:ui",
+			"title": "Icon Transition Toggle",
+			"description": "A toggle button with smooth icon transitions using opacity, blur, and scale animations inspired by animations.dev",
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "src/components/registry/icon-transition-toggle.tsx",
+					"type": "registry:component"
+				}
+			]
 		}
 	]
 }

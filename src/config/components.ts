@@ -242,6 +242,82 @@ export default function Example() {
 		],
 		registryDependencies: ["pagination"],
 	},
+	{
+		slug: "icon-transition-toggle",
+		name: "Icon Transition Toggle",
+		category: "feedback",
+		description:
+			"アイコン切り替え時に滑らかなトランジションを持つトグルボタン。opacity、blur、scaleを組み合わせた自然なアニメーションで、animations.devの「良いアニメーション」を参考にした実装です。",
+		registryName: "icon-transition-toggle",
+		demoProps: {
+			isToggled: false,
+		},
+		codeExample: `import { IconTransitionToggle } from "@/components/icon-transition-toggle";
+import { Heart, Check, X } from "lucide-react";
+import { useState } from "react";
+
+export default function Example() {
+  const [isLiked, setIsLiked] = useState(false);
+
+  return (
+    <IconTransitionToggle
+      icon={Heart}
+      toggledIcon={Heart}
+      isToggled={isLiked}
+      onToggle={() => setIsLiked(!isLiked)}
+      aria-label="いいね"
+    />
+  );
+}`,
+		props: [
+			{
+				name: "icon",
+				type: "LucideIcon",
+				required: true,
+				description:
+					"最初に表示するアイコン（lucide-reactのアイコンコンポーネント）。",
+			},
+			{
+				name: "toggledIcon",
+				type: "LucideIcon",
+				required: true,
+				description:
+					"トグル時に表示するアイコン（lucide-reactのアイコンコンポーネント）。",
+			},
+			{
+				name: "isToggled",
+				type: "boolean",
+				required: true,
+				description: "現在の状態（true: toggledIcon表示、false: icon表示）。",
+			},
+			{
+				name: "onToggle",
+				type: "() => void",
+				required: true,
+				description: "トグル時に呼ばれるコールバック関数。",
+			},
+			{
+				name: "iconSize",
+				type: "number",
+				required: false,
+				default: "24",
+				description: "アイコンのサイズ（px単位）。",
+			},
+			{
+				name: "className",
+				type: "string",
+				required: false,
+				description: "ボタンに追加するCSSクラス名。",
+			},
+			{
+				name: "aria-label",
+				type: "string",
+				required: false,
+				description: "アクセシビリティ用のラベル（推奨）。",
+			},
+		],
+		dependencies: ["framer-motion", "lucide-react"],
+	},
 ];
 
 // カテゴリごとにグループ化
