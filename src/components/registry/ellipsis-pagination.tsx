@@ -57,29 +57,12 @@ function generatePageNumbers(
 		value: totalPages - boundaryCount + i + 1,
 	}));
 
-	// 現在ページ周辺のページ番号の初期計算
-	let startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
-	let endPage = Math.min(
+	// 現在ページ周辺のページ番号を計算
+	const startPage = Math.max(boundaryCount + 1, currentPage - siblingCount);
+	const endPage = Math.min(
 		totalPages - boundaryCount,
 		currentPage + siblingCount,
 	);
-
-	// 左側にellipsisがない場合は、endPageを広げる
-	if (startPage <= boundaryCount + 1) {
-		endPage = Math.min(
-			totalPages - boundaryCount,
-			boundaryCount + 1 + siblingCount,
-		);
-	}
-
-	// 右側にellipsisがない場合は、startPageを下げてendPageを広げる
-	if (endPage >= totalPages - boundaryCount) {
-		startPage = Math.max(
-			boundaryCount + 1,
-			totalPages - boundaryCount - siblingCount,
-		);
-		endPage = totalPages - boundaryCount;
-	}
 
 	// middlePagesを生成（firstPages/lastPagesと重複しない範囲）
 	const middlePages: PageItem[] = [];
