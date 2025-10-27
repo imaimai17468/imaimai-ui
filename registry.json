@@ -15,6 +15,19 @@
 					"type": "registry:component"
 				}
 			]
+		},
+		{
+			"name": "ellipsis-pagination",
+			"type": "registry:ui",
+			"title": "Ellipsis Pagination",
+			"description": "A pagination component that automatically truncates page numbers with ellipsis when there are many pages",
+			"registryDependencies": ["pagination"],
+			"files": [
+				{
+					"path": "src/components/registry/ellipsis-pagination.tsx",
+					"type": "registry:component"
+				}
+			]
 		}
 	]
 }
