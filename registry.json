@@ -28,6 +28,19 @@
 					"type": "registry:component"
 				}
 			]
+		},
+		{
+			"name": "exponential-pagination",
+			"type": "registry:ui",
+			"title": "Exponential Pagination",
+			"description": "A pagination component with exponential jumps (powers of 2) for handling large page counts like 500+",
+			"registryDependencies": ["pagination"],
+			"files": [
+				{
+					"path": "src/components/registry/exponential-pagination.tsx",
+					"type": "registry:component"
+				}
+			]
 		}
 	]
 }
