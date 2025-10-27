@@ -141,8 +141,6 @@ export default function Example() {
       currentPage={currentPage}
       totalPages={totalPages}
       onPageChange={setCurrentPage}
-      siblingCount={1}
-      boundaryCount={1}
     />
   );
 }`,
