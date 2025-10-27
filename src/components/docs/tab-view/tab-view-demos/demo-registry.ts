@@ -1,6 +1,7 @@
 import type { ComponentConfig } from "@/config/components";
 import { DefaultDemo } from "./default-demo/DefaultDemo";
 import { EllipsisPaginationDemo } from "./ellipsis-pagination-demo/EllipsisPaginationDemo";
+import { ExponentialPaginationDemo } from "./exponential-pagination-demo/ExponentialPaginationDemo";
 import { MultiSelectComboboxDemo } from "./multi-select-combobox-demo/MultiSelectComboboxDemo";
 
 /**
@@ -22,6 +23,7 @@ export type DemoComponent = React.ComponentType<{
 export const demoRegistry: Record<string, DemoComponent> = {
 	"multi-select-combobox": MultiSelectComboboxDemo,
 	"ellipsis-pagination": EllipsisPaginationDemo,
+	"exponential-pagination": ExponentialPaginationDemo,
 };
 
 /**

@@ -187,6 +187,61 @@ export default function Example() {
 		],
 		registryDependencies: ["pagination"],
 	},
+	{
+		slug: "exponential-pagination",
+		name: "Exponential Pagination",
+		category: "layout",
+		description:
+			"指数的なページジャンプを持つPaginationコンポーネント。ページ数が500以上など非常に多い場合に適しており、1, 2, 3, 4, 8, 16, 32...のように2の累乗でジャンプします。",
+		registryName: "exponential-pagination",
+		demoProps: {
+			currentPage: 256,
+			totalPages: 500,
+		},
+		codeExample: `import { ExponentialPagination } from "@/components/exponential-pagination";
+import { useState } from "react";
+
+export default function Example() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 500;
+
+  return (
+    <ExponentialPagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={setCurrentPage}
+    />
+  );
+}`,
+		props: [
+			{
+				name: "currentPage",
+				type: "number",
+				required: true,
+				description: "現在のページ（1-indexed）。",
+			},
+			{
+				name: "totalPages",
+				type: "number",
+				required: true,
+				description: "総ページ数。",
+			},
+			{
+				name: "onPageChange",
+				type: "(page: number) => void",
+				required: true,
+				description: "ページが変更されたときに呼ばれるコールバック関数。",
+			},
+			{
+				name: "siblingCount",
+				type: "number",
+				required: false,
+				default: "3",
+				description: "現在ページの前後に表示する連続ページ数。",
+			},
+		],
+		registryDependencies: ["pagination"],
+	},
 ];
 
 // カテゴリごとにグループ化
