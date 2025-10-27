@@ -69,15 +69,18 @@ function generatePageNumbers(
 
 	// edgeCountが正の値の場合、端にいる時の表示数を拡張
 	if (edgeCount && edgeCount > 0) {
-		// 左端にいる場合（左側にellipsisがない）
-		if (startPage <= boundaryCount + 1) {
-			endPage = Math.min(totalPages - boundaryCount, boundaryCount + edgeCount);
+		// 左端にいる場合（currentPageが左側に近い）
+		if (currentPage <= boundaryCount + siblingCount) {
+			endPage = Math.min(
+				totalPages - boundaryCount,
+				boundaryCount + siblingCount + edgeCount,
+			);
 		}
-		// 右端にいる場合（右側にellipsisがない）
-		else if (endPage >= totalPages - boundaryCount) {
+		// 右端にいる場合（currentPageが右側に近い）
+		else if (currentPage > totalPages - boundaryCount - siblingCount) {
 			startPage = Math.max(
 				boundaryCount + 1,
-				totalPages - boundaryCount - edgeCount + 1,
+				totalPages - boundaryCount - siblingCount - edgeCount + 1,
 			);
 		}
 	}
