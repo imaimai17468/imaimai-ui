@@ -16,34 +16,25 @@ export interface ExponentialPaginationProps {
 	totalPages: number;
 	/** ページ変更時のコールバック */
 	onPageChange: (page: number) => void;
-	/** 現在ページの前後に表示する連続ページ数（デフォルト: 3） */
-	siblingCount?: number;
 }
 
 /**
  * 指数的なページ番号の配列を生成する（省略記号なし）
- * 現在ページから2の累乗で前後にジャンプ、周辺は連続で表示
+ * 現在ページから累積的に2の累乗でジャンプ
  */
 function generateExponentialPages(
 	currentPage: number,
 	totalPages: number,
-	siblingCount: number,
 ): number[] {
 	const pages = new Set<number>();
 
-	// 1と最終ページは常に表示
+	// 1、現在ページ、最終ページは常に表示
 	pages.add(1);
+	pages.add(currentPage);
 	pages.add(totalPages);
 
-	// 現在ページの前後siblingCount分を連続表示
-	const rangeStart = Math.max(1, currentPage - siblingCount);
-	const rangeEnd = Math.min(totalPages, currentPage + siblingCount);
-	for (let i = rangeStart; i <= rangeEnd; i++) {
-		pages.add(i);
-	}
-
-	// 前方向: rangeStartから累積的に2の累乗を引いていく
-	let prevPage = rangeStart;
+	// 前方向: currentPageから累積的に2の累乗を引いていく
+	let prevPage = currentPage;
 	let prevPower = 2; // 2^2 = 4 から開始
 	while (prevPage > 1) {
 		prevPage = prevPage - 2 ** prevPower;
@@ -53,8 +44,8 @@ function generateExponentialPages(
 		prevPower++;
 	}
 
-	// 後方向: rangeEndから累積的に2の累乗を足していく
-	let nextPage = rangeEnd;
+	// 後方向: currentPageから累積的に2の累乗を足していく
+	let nextPage = currentPage;
 	let nextPower = 2; // 2^2 = 4 から開始
 	while (nextPage < totalPages) {
 		nextPage = nextPage + 2 ** nextPower;
@@ -71,7 +62,7 @@ function generateExponentialPages(
 /**
  * 指数的なページジャンプを持つPaginationコンポーネント（省略記号なし）
  * AtCoderのstandingsページのようなページ数が多い場合に適している
- * 1と2の累乗（2, 4, 8, 16, 32...）を表示し、現在ページ周辺は連続で表示
+ * 現在ページから累積的に2の累乗でジャンプ
  *
  * @example
  * ```tsx
@@ -79,7 +70,6 @@ function generateExponentialPages(
  *   currentPage={256}
  *   totalPages={500}
  *   onPageChange={(page) => console.log(page)}
- *   siblingCount={3}
  * />
  * ```
  */
@@ -87,9 +77,8 @@ export function ExponentialPagination({
 	currentPage,
 	totalPages,
 	onPageChange,
-	siblingCount = 3,
 }: ExponentialPaginationProps) {
-	const pages = generateExponentialPages(currentPage, totalPages, siblingCount);
+	const pages = generateExponentialPages(currentPage, totalPages);
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {

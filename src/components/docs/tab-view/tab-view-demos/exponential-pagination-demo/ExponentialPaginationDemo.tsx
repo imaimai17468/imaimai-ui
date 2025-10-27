@@ -36,7 +36,7 @@ export function ExponentialPaginationDemo({
 			{/* デモ1: 最初のページ */}
 			<DemoSection
 				title="最初のページ"
-				description="現在ページの前後3ページは連続で表示され、その外側は2の累乗（4, 8, 16, 32...）でジャンプします。"
+				description="現在ページから累積的に2の累乗（+4, +8, +16, +32...）でジャンプします。"
 			>
 				<DemoCard centered>
 					<ExponentialPagination
@@ -51,7 +51,7 @@ export function ExponentialPaginationDemo({
 			{/* デモ2: 中間ページ */}
 			<DemoSection
 				title="中間ページ"
-				description="現在ページの前後3ページは連続で表示され、それ以外は2の累乗でジャンプします。"
+				description="現在ページから前後に累積的に2の累乗でジャンプします。"
 			>
 				<DemoCard centered>
 					<ExponentialPagination
@@ -66,7 +66,7 @@ export function ExponentialPaginationDemo({
 			{/* デモ3: 最終ページ付近 */}
 			<DemoSection
 				title="最終ページ付近"
-				description="最終ページ付近では、前方の連続ページと2の累乗のページが表示されます。"
+				description="最終ページでは、前方に向かって累積的に2の累乗でジャンプします。"
 			>
 				<DemoCard centered>
 					<ExponentialPagination
