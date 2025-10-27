@@ -42,31 +42,23 @@ function generateExponentialPages(
 		pages.add(i);
 	}
 
-	// 前方向: rangeStartより小さい最大の2の累乗を探し、そこから数段階表示
-	let prevPower = 1;
+	// 前方向: rangeStartより小さいすべての2の累乗を表示
+	let prevPower = 0;
 	while (2 ** prevPower < rangeStart) {
-		prevPower++;
-	}
-	prevPower--; // rangeStartより小さい最大の累乗
-
-	// 前方向に最大4段階の2の累乗を表示
-	for (let i = 0; i < 4 && prevPower >= 0; i++) {
 		const page = 2 ** prevPower;
-		if (page >= 1) {
+		if (page >= 1 && page < rangeStart) {
 			pages.add(page);
 		}
-		prevPower--;
+		prevPower++;
 	}
 
-	// 後方向: rangeEndより大きい最小の2の累乗を探し、そこから数段階表示
+	// 後方向: rangeEndより大きいすべての2の累乗を表示
 	let nextPower = 0;
-	while (2 ** nextPower <= rangeEnd) {
-		nextPower++;
-	}
-
-	// 後方向に最大4段階の2の累乗を表示
-	for (let i = 0; i < 4 && 2 ** nextPower <= totalPages; i++) {
-		pages.add(2 ** nextPower);
+	while (2 ** nextPower <= totalPages) {
+		const page = 2 ** nextPower;
+		if (page > rangeEnd && page <= totalPages) {
+			pages.add(page);
+		}
 		nextPower++;
 	}
 
