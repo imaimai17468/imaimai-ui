@@ -119,9 +119,9 @@ export function ExponentialPagination({
 					<PaginationNext
 						onClick={handleNext}
 						aria-disabled={currentPage === totalPages}
-						className={
+						className={`justify-self-end ${
 							currentPage === totalPages ? "pointer-events-none opacity-50" : ""
-						}
+						}`}
 					/>
 				</div>
 				{/* ページ番号（grid表示） */}
