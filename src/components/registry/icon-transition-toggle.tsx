@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export interface IconTransitionToggleProps {
 	/** 最初に表示するアイコン */
@@ -58,23 +57,7 @@ export function IconTransitionToggle({
 			type="button"
 			onClick={onToggle}
 			aria-label={ariaLabel}
-			className={cn(
-				"relative flex h-10 w-10 items-center justify-center rounded-lg",
-				"bg-white text-gray-900",
-				// animations.devと同じshadow
-				"shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_2px_2px_0_rgba(0,0,0,0.04)]",
-				// animations.devと同じtransition設定
-				"transition-colors duration-150",
-				// animations.devと同じホバー（白→ほぼ白の微妙な変化）
-				"hover:bg-[#FAFAFA]",
-				// フォーカス表示
-				"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400",
-				className,
-			)}
-			style={{
-				// animations.devと同じcubic-bezier
-				transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-			}}
+			className={className}
 		>
 			<div className="relative" style={{ width: iconSize, height: iconSize }}>
 				<AnimatePresence mode="wait" initial={false}>
