@@ -1,114 +1,209 @@
 "use client";
 
-import { Check, Heart, Moon, Pause, Play, Sun, X } from "lucide-react";
+import { CircleCheck, Copy } from "lucide-react";
 import { useState } from "react";
 import { IconTransitionToggle } from "@/components/registry/icon-transition-toggle";
-import type { ComponentConfig } from "@/config/components";
+import { Button } from "@/components/ui/button";
 import { DemoCard } from "../../demo-card/DemoCard";
-import { DemoOutput } from "../../demo-output/DemoOutput";
 import { DemoSection } from "../../demo-section/DemoSection";
-
-interface IconTransitionToggleDemoProps {
-	component: ComponentConfig;
-}
 
 /**
  * IconTransitionToggle デモコンポーネント
- * 様々なユースケースのトグルボタンを表示
+ * コピーボタンのトグルアニメーションを表示
  */
-export function IconTransitionToggleDemo({
-	component: _component,
-}: IconTransitionToggleDemoProps) {
-	// デモ1: いいねボタン
-	const [isLiked, setIsLiked] = useState<boolean>(false);
+export function IconTransitionToggleDemo() {
+	const [isCopied1, setIsCopied1] = useState<boolean>(false);
+	const [isCopied2, setIsCopied2] = useState<boolean>(false);
 
-	// デモ2: 成功/失敗トグル
-	const [isSuccess, setIsSuccess] = useState<boolean>(true);
+	// Variants
+	const [isCopied3, setIsCopied3] = useState<boolean>(false);
+	const [isCopied4, setIsCopied4] = useState<boolean>(false);
+	const [isCopied5, setIsCopied5] = useState<boolean>(false);
+	const [isCopied6, setIsCopied6] = useState<boolean>(false);
+	const [isCopied7, setIsCopied7] = useState<boolean>(false);
 
-	// デモ3: 再生/一時停止
-	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+	// Sizes
+	const [isCopied8, setIsCopied8] = useState<boolean>(false);
+	const [isCopied9, setIsCopied9] = useState<boolean>(false);
+	const [isCopied10, setIsCopied10] = useState<boolean>(false);
 
-	// デモ4: ライト/ダークモード
-	const [isDark, setIsDark] = useState<boolean>(false);
+	// Custom Colors
+	const [isCopied11, setIsCopied11] = useState<boolean>(false);
 
 	return (
 		<div className="space-y-8">
-			{/* デモ1: いいねボタン */}
+			{/* 比較デモ */}
 			<DemoSection
-				title="いいねボタン"
-				description="シンプルなアイコントグル。同じアイコンを使用して、色の変化で状態を表現します。animations.devの「良いアニメーション」と同じ0.15秒のトランジションで、opacity、blur、scaleが滑らかに変化します。"
+				title="比較"
+				description="blur + scale + opacity を組み合わせることで、滑らかで自然なトランジションを実現。アニメーションなしと比較してみてください。"
 			>
 				<DemoCard centered>
-					<IconTransitionToggle
-						icon={Heart}
-						toggledIcon={Heart}
-						isToggled={isLiked}
-						onToggle={() => setIsLiked(!isLiked)}
-						aria-label="いいね"
-						className={isLiked ? "text-red-500" : ""}
-					/>
+					<div className="flex items-center justify-center gap-12">
+						{/* blur + scale + opacity */}
+						<div className="flex flex-col items-center gap-4">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied1}
+								onToggle={() => setIsCopied1(!isCopied1)}
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-sm">
+								blur + scale + opacity
+							</div>
+						</div>
+
+						{/* アニメーションなし */}
+						<div className="flex flex-col items-center gap-4">
+							<Button
+								type="button"
+								variant="outline"
+								size="icon"
+								onClick={() => setIsCopied2(!isCopied2)}
+								aria-label="コピー"
+							>
+								{isCopied2 ? <CircleCheck size={24} /> : <Copy size={24} />}
+							</Button>
+							<div className="text-muted-foreground text-sm">
+								アニメーションなし
+							</div>
+						</div>
+					</div>
 				</DemoCard>
-				<DemoOutput
-					label="状態:"
-					value={isLiked ? "いいね済み ❤️" : "未いいね"}
-				/>
 			</DemoSection>
 
-			{/* デモ2: 成功/失敗トグル */}
+			{/* Variants デモ */}
 			<DemoSection
-				title="成功/失敗トグル"
-				description="異なるアイコン間の切り替え。チェックマークとバツ印で状態を明確に表現します。"
+				title="Variants"
+				description="shadcn/ui Button の全ての variant に対応。default、destructive、outline（デフォルト）、secondary、ghost が使用できます。"
 			>
 				<DemoCard centered>
-					<IconTransitionToggle
-						icon={Check}
-						toggledIcon={X}
-						isToggled={!isSuccess}
-						onToggle={() => setIsSuccess(!isSuccess)}
-						aria-label="成功/失敗切り替え"
-						className={isSuccess ? "text-green-600" : "text-red-600"}
-					/>
+					<div className="grid grid-cols-3 gap-8 md:grid-cols-5">
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied3}
+								onToggle={() => setIsCopied3(!isCopied3)}
+								variant="default"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">default</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied4}
+								onToggle={() => setIsCopied4(!isCopied4)}
+								variant="destructive"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">destructive</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied5}
+								onToggle={() => setIsCopied5(!isCopied5)}
+								variant="outline"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">
+								outline (default)
+							</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied6}
+								onToggle={() => setIsCopied6(!isCopied6)}
+								variant="secondary"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">secondary</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied7}
+								onToggle={() => setIsCopied7(!isCopied7)}
+								variant="ghost"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">ghost</div>
+						</div>
+					</div>
 				</DemoCard>
-				<DemoOutput label="状態:" value={isSuccess ? "成功 ✓" : "失敗 ✗"} />
 			</DemoSection>
 
-			{/* デモ3: 再生/一時停止 */}
+			{/* Sizes デモ */}
 			<DemoSection
-				title="再生/一時停止"
-				description="メディアコントロールのような機能的なトグル。アイコンの形状が変わることで操作が直感的になります。"
+				title="Sizes"
+				description="size props でボタンとアイコンのサイズを自動調整。sm（32px, icon 12px）、default（36px, icon 16px）、lg（48px, icon 20px）の3つのサイズが使用できます。"
 			>
 				<DemoCard centered>
-					<IconTransitionToggle
-						icon={Play}
-						toggledIcon={Pause}
-						isToggled={isPlaying}
-						onToggle={() => setIsPlaying(!isPlaying)}
-						aria-label="再生/一時停止"
-						className="text-blue-600"
-					/>
+					<div className="grid grid-cols-3 gap-8 md:grid-cols-3">
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied8}
+								onToggle={() => setIsCopied8(!isCopied8)}
+								size="sm"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">sm</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied9}
+								onToggle={() => setIsCopied9(!isCopied9)}
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">default</div>
+						</div>
+						<div className="flex flex-col items-center gap-3">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied10}
+								onToggle={() => setIsCopied10(!isCopied10)}
+								size="lg"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-xs">lg</div>
+						</div>
+					</div>
 				</DemoCard>
-				<DemoOutput label="状態:" value={isPlaying ? "再生中 ▶" : "停止中 ⏸"} />
 			</DemoSection>
 
-			{/* デモ4: ライト/ダークモード */}
+			{/* Custom Colors デモ */}
 			<DemoSection
-				title="ライト/ダークモード切り替え"
-				description="テーマ切り替えのような対称的な状態のトグル。太陽と月のアイコンで視覚的に分かりやすく表現します。"
+				title="Custom Colors"
+				description="iconProps と toggledIconProps を使用して、アイコンの前後で異なる色やスタイルを適用できます。"
 			>
 				<DemoCard centered>
-					<IconTransitionToggle
-						icon={Sun}
-						toggledIcon={Moon}
-						isToggled={isDark}
-						onToggle={() => setIsDark(!isDark)}
-						aria-label="ライト/ダークモード切り替え"
-						className={isDark ? "text-indigo-400" : "text-yellow-500"}
-					/>
+					<div className="flex flex-col items-center gap-4">
+						<IconTransitionToggle
+							icon={Copy}
+							toggledIcon={CircleCheck}
+							isToggled={isCopied11}
+							onToggle={() => setIsCopied11(!isCopied11)}
+							iconProps={{ className: "text-blue-500" }}
+							toggledIconProps={{ className: "text-green-500" }}
+							aria-label="コピー"
+						/>
+						<div className="text-center text-muted-foreground text-xs">
+							Copy (青) → Check (緑)
+						</div>
+					</div>
 				</DemoCard>
-				<DemoOutput
-					label="現在のモード:"
-					value={isDark ? "ダーク 🌙" : "ライト ☀️"}
-				/>
 			</DemoSection>
 		</div>
 	);

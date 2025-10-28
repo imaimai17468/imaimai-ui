@@ -329,6 +329,20 @@ export default function Example() {
 				default: '"icon"',
 				description: "ボタンのサイズ（shadcn/ui Buttonのsize）。",
 			},
+			{
+				name: "iconProps",
+				type: "React.ComponentProps<LucideIcon>",
+				required: false,
+				description:
+					"アイコンコンポーネントに渡す追加のプロパティ（className、strokeWidthなど）。",
+			},
+			{
+				name: "toggledIconProps",
+				type: "React.ComponentProps<LucideIcon>",
+				required: false,
+				description:
+					"トグル後のアイコンコンポーネントに渡す追加のプロパティ（className、strokeWidthなど）。",
+			},
 		],
 		dependencies: ["framer-motion", "lucide-react"],
 		registryDependencies: ["button"],

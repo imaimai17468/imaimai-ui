@@ -25,6 +25,10 @@ export interface IconTransitionToggleProps
 	onToggle: () => void;
 	/** アイコンのサイズ（デフォルト: 24px） */
 	iconSize?: number;
+	/** アイコンコンポーネントに渡す追加のプロパティ */
+	iconProps?: React.ComponentProps<LucideIcon>;
+	/** トグル後のアイコンコンポーネントに渡す追加のプロパティ */
+	toggledIconProps?: React.ComponentProps<LucideIcon>;
 }
 
 /**
@@ -55,25 +59,41 @@ export function IconTransitionToggle({
 	toggledIcon: ToggledIcon,
 	isToggled,
 	onToggle,
-	iconSize = 24,
-	variant = "ghost",
+	iconSize,
+	iconProps,
+	toggledIconProps,
+	variant = "outline",
 	size = "icon",
 	className,
-	...props
+	...buttonProps
 }: IconTransitionToggleProps) {
+	// size に応じて自動的に iconSize を設定
+	const computedIconSize =
+		iconSize ??
+		(size === "sm" ? 12 : size === "lg" ? 20 : size === "default" ? 16 : 16);
+
+	// size に応じてボタンを正方形にする
+	const sizeClassName =
+		size === "sm" ? "size-8" : size === "lg" ? "size-10" : "";
+
 	return (
 		<Button
 			type="button"
 			variant={variant}
-			size={size}
+			size="icon"
 			onClick={onToggle}
-			{...props}
+			className={cn(
+				"transition-transform active:scale-[0.97]",
+				sizeClassName,
+				className,
+			)}
+			{...buttonProps}
 		>
 			<div
-				className={cn("relative", className)}
-				style={{ width: iconSize, height: iconSize }}
+				className="relative"
+				style={{ width: computedIconSize, height: computedIconSize }}
 			>
-				<AnimatePresence mode="wait" initial={false}>
+				<AnimatePresence initial={false}>
 					<motion.div
 						key={isToggled ? "toggled" : "default"}
 						className="absolute inset-0 flex items-center justify-center"
@@ -81,8 +101,8 @@ export function IconTransitionToggle({
 						style={{ willChange: "transform" }}
 						initial={{
 							opacity: 0,
-							filter: "blur(4px)",
-							scale: 0.8,
+							filter: "blur(2px)",
+							scale: 0.97,
 						}}
 						animate={{
 							opacity: 1,
@@ -91,8 +111,8 @@ export function IconTransitionToggle({
 						}}
 						exit={{
 							opacity: 0,
-							filter: "blur(4px)",
-							scale: 0.8,
+							filter: "blur(2px)",
+							scale: 0.97,
 						}}
 						transition={{
 							duration: 0.15,
@@ -100,9 +120,17 @@ export function IconTransitionToggle({
 						}}
 					>
 						{isToggled ? (
-							<ToggledIcon size={iconSize} />
+							<ToggledIcon
+								size={computedIconSize}
+								{...toggledIconProps}
+								className={cn("size-auto", toggledIconProps?.className)}
+							/>
 						) : (
-							<Icon size={iconSize} />
+							<Icon
+								size={computedIconSize}
+								{...iconProps}
+								className={cn("size-auto", iconProps?.className)}
+							/>
 						)}
 					</motion.div>
 				</AnimatePresence>
