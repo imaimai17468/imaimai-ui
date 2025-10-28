@@ -60,11 +60,13 @@ export function IconTransitionToggle({
 			aria-label={ariaLabel}
 			className={cn(
 				"relative flex h-10 w-10 items-center justify-center rounded-lg",
-				"bg-white text-gray-900 shadow-sm",
-				"dark:bg-gray-100 dark:text-gray-1200",
+				"bg-white text-gray-900",
+				// animations.devと同じshadow
+				"shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_2px_2px_0_rgba(0,0,0,0.04)]",
 				// animations.devと同じtransition設定
 				"transition-colors duration-150",
-				"hover:bg-[#FAFAFA] dark:hover:bg-[#171717]",
+				// animations.devと同じホバー（白→ほぼ白の微妙な変化）
+				"hover:bg-[#FAFAFA]",
 				// フォーカス表示
 				"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400",
 				className,
