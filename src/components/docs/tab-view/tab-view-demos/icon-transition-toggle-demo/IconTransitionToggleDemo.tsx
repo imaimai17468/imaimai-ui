@@ -43,6 +43,8 @@ export function IconTransitionToggleDemo() {
 								toggledIcon={CircleCheck}
 								isToggled={isCopied1}
 								onToggle={() => setIsCopied1(!isCopied1)}
+								tooltip="コピーする"
+								toggledTooltip="コピーしました"
 								aria-label="コピー"
 							/>
 							<div className="text-muted-foreground text-sm">

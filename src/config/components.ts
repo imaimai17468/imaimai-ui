@@ -343,9 +343,21 @@ export default function Example() {
 				description:
 					"トグル後のアイコンコンポーネントに渡す追加のプロパティ（className、strokeWidthなど）。",
 			},
+			{
+				name: "tooltip",
+				type: "string",
+				required: false,
+				description: "ホバー時に表示するtooltipテキスト。",
+			},
+			{
+				name: "toggledTooltip",
+				type: "string",
+				required: false,
+				description: "トグル後にホバー時に表示するtooltipテキスト。",
+			},
 		],
 		dependencies: ["framer-motion", "lucide-react"],
-		registryDependencies: ["button"],
+		registryDependencies: ["button", "tooltip"],
 	},
 ];
 

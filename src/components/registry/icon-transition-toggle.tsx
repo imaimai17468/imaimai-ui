@@ -5,6 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
 import { Button, type buttonVariants } from "@/components/ui/button";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export interface IconTransitionToggleProps
@@ -29,6 +34,10 @@ export interface IconTransitionToggleProps
 	iconProps?: React.ComponentProps<LucideIcon>;
 	/** トグル後のアイコンコンポーネントに渡す追加のプロパティ */
 	toggledIconProps?: React.ComponentProps<LucideIcon>;
+	/** ホバー時に表示するtooltipテキスト */
+	tooltip?: string;
+	/** トグル後にホバー時に表示するtooltipテキスト */
+	toggledTooltip?: string;
 }
 
 /**
@@ -62,6 +71,8 @@ export function IconTransitionToggle({
 	iconSize,
 	iconProps,
 	toggledIconProps,
+	tooltip,
+	toggledTooltip,
 	variant = "outline",
 	size = "icon",
 	className,
@@ -76,7 +87,11 @@ export function IconTransitionToggle({
 	const sizeClassName =
 		size === "sm" ? "size-8" : size === "lg" ? "size-10" : "";
 
-	return (
+	// 現在の状態に応じたtooltipテキストを取得
+	const currentTooltip = isToggled ? toggledTooltip : tooltip;
+
+	// Button要素を定義
+	const button = (
 		<Button
 			type="button"
 			variant={variant}
@@ -136,5 +151,20 @@ export function IconTransitionToggle({
 				</AnimatePresence>
 			</div>
 		</Button>
+	);
+
+	// tooltipが指定されていない場合は通常のButtonを返す
+	if (!currentTooltip) {
+		return button;
+	}
+
+	// tooltipがある場合はTooltipでラップ
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>{button}</TooltipTrigger>
+			<TooltipContent>
+				<p>{currentTooltip}</p>
+			</TooltipContent>
+		</Tooltip>
 	);
 }
