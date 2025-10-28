@@ -247,7 +247,7 @@ export default function Example() {
 		name: "Icon Transition Toggle",
 		category: "feedback",
 		description:
-			"アイコン切り替え時に滑らかなトランジションを持つトグルボタン。opacity、blur、scaleを組み合わせた自然なアニメーションで、animations.devの「良いアニメーション」を参考にした実装です。",
+			"アイコン切り替え時に滑らかなトランジションを持つトグルボタン。opacity、blur、scaleを組み合わせた自然なアニメーションです。",
 		registryName: "icon-transition-toggle",
 		demoProps: {
 			isToggled: false,

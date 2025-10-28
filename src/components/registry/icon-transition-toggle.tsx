@@ -43,7 +43,7 @@ export interface IconTransitionToggleProps
 
 /**
  * アイコントランジション付きトグルボタン
- * animations.devの「良いアニメーション」を参考にした実装
+ * アイコン切り替え時に滑らかなトランジションを持つトグルボタン
  *
  * アニメーション仕様:
  * - ボタン本体: 0.15s cubic-bezier(0.4, 0, 0.2, 1)で背景色遷移
