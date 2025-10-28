@@ -67,10 +67,12 @@ export function IconTransitionToggle({
 			variant={variant}
 			size={size}
 			onClick={onToggle}
-			className={cn("[&_svg]:!text-current", className)}
 			{...props}
 		>
-			<div className="relative" style={{ width: iconSize, height: iconSize }}>
+			<div
+				className={cn("relative", className)}
+				style={{ width: iconSize, height: iconSize }}
+			>
 				<AnimatePresence mode="wait" initial={false}>
 					<motion.div
 						key={isToggled ? "toggled" : "default"}
