@@ -27,9 +27,6 @@ export function IconTransitionToggleDemo() {
 	const [isCopied9, setIsCopied9] = useState<boolean>(false);
 	const [isCopied10, setIsCopied10] = useState<boolean>(false);
 
-	// Custom Colors
-	const [isCopied11, setIsCopied11] = useState<boolean>(false);
-
 	return (
 		<div className="space-y-8">
 			{/* 比較デモ */}
@@ -178,29 +175,6 @@ export function IconTransitionToggleDemo() {
 								aria-label="コピー"
 							/>
 							<div className="text-muted-foreground text-xs">lg</div>
-						</div>
-					</div>
-				</DemoCard>
-			</DemoSection>
-
-			{/* Custom Colors デモ */}
-			<DemoSection
-				title="Custom Colors"
-				description="iconProps と toggledIconProps を使用して、アイコンの前後で異なる色やスタイルを適用できます。"
-			>
-				<DemoCard centered>
-					<div className="flex flex-col items-center gap-4">
-						<IconTransitionToggle
-							icon={Copy}
-							toggledIcon={CircleCheck}
-							isToggled={isCopied11}
-							onToggle={() => setIsCopied11(!isCopied11)}
-							iconProps={{ className: "text-blue-500" }}
-							toggledIconProps={{ className: "text-green-500" }}
-							aria-label="コピー"
-						/>
-						<div className="text-center text-muted-foreground text-xs">
-							Copy (青) → Check (緑)
 						</div>
 					</div>
 				</DemoCard>
