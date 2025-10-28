@@ -1,9 +1,19 @@
 "use client";
 
+import type { VariantProps } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
+import type * as React from "react";
+import { Button, type buttonVariants } from "@/components/ui/button";
 
-export interface IconTransitionToggleProps {
+export interface IconTransitionToggleProps
+	extends Omit<
+		React.ComponentProps<"button"> &
+			VariantProps<typeof buttonVariants> & {
+				asChild?: boolean;
+			},
+		"children" | "onClick"
+	> {
 	/** 最初に表示するアイコン */
 	icon: LucideIcon;
 	/** トグル時に表示するアイコン */
@@ -14,10 +24,6 @@ export interface IconTransitionToggleProps {
 	onToggle: () => void;
 	/** アイコンのサイズ（デフォルト: 24px） */
 	iconSize?: number;
-	/** 追加のCSSクラス名 */
-	className?: string;
-	/** aria-label（アクセシビリティ用） */
-	"aria-label"?: string;
 }
 
 /**
@@ -49,15 +55,17 @@ export function IconTransitionToggle({
 	isToggled,
 	onToggle,
 	iconSize = 24,
-	className,
-	"aria-label": ariaLabel,
+	variant = "ghost",
+	size = "icon",
+	...props
 }: IconTransitionToggleProps) {
 	return (
-		<button
+		<Button
 			type="button"
+			variant={variant}
+			size={size}
 			onClick={onToggle}
-			aria-label={ariaLabel}
-			className={className}
+			{...props}
 		>
 			<div className="relative" style={{ width: iconSize, height: iconSize }}>
 				<AnimatePresence mode="wait" initial={false}>
@@ -94,6 +102,6 @@ export function IconTransitionToggle({
 					</motion.div>
 				</AnimatePresence>
 			</div>
-		</button>
+		</Button>
 	);
 }

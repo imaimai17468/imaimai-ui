@@ -315,8 +315,23 @@ export default function Example() {
 				required: false,
 				description: "アクセシビリティ用のラベル（推奨）。",
 			},
+			{
+				name: "variant",
+				type: '"default" | "destructive" | "outline" | "secondary" | "ghost" | "link"',
+				required: false,
+				default: '"ghost"',
+				description: "ボタンのバリアント（shadcn/ui Buttonのvariant）。",
+			},
+			{
+				name: "size",
+				type: '"default" | "sm" | "lg" | "icon"',
+				required: false,
+				default: '"icon"',
+				description: "ボタンのサイズ（shadcn/ui Buttonのsize）。",
+			},
 		],
 		dependencies: ["framer-motion", "lucide-react"],
+		registryDependencies: ["button"],
 	},
 ];
 
