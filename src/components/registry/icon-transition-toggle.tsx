@@ -4,7 +4,7 @@ import type { VariantProps } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import {
 	Tooltip,
@@ -39,6 +39,8 @@ export interface IconTransitionToggleProps
 	tooltip?: string;
 	/** トグル後にホバー時に表示するtooltipテキスト */
 	toggledTooltip?: string;
+	/** トグル後、自動で元に戻るまでのミリ秒（例: 2000 = 2秒後）。指定しない場合は自動リセットしない */
+	autoResetTimeout?: number;
 }
 
 /**
@@ -53,6 +55,7 @@ export interface IconTransitionToggleProps
  *
  * @example
  * ```tsx
+ * // 基本的な使用例
  * const [isLiked, setIsLiked] = useState(false);
  *
  * <IconTransitionToggle
@@ -61,6 +64,16 @@ export interface IconTransitionToggleProps
  *   isToggled={isLiked}
  *   onToggle={() => setIsLiked(!isLiked)}
  *   aria-label="いいね"
+ * />
+ *
+ * // 自動リセット機能付き（2秒後に元に戻る）
+ * <IconTransitionToggle
+ *   icon={Copy}
+ *   toggledIcon={CircleCheck}
+ *   isToggled={isCopied}
+ *   onToggle={() => setIsCopied(!isCopied)}
+ *   autoResetTimeout={2000}
+ *   aria-label="コピー"
  * />
  * ```
  */
@@ -74,6 +87,7 @@ export function IconTransitionToggle({
 	toggledIconProps,
 	tooltip,
 	toggledTooltip,
+	autoResetTimeout,
 	variant = "outline",
 	size = "icon",
 	className,
@@ -90,6 +104,18 @@ export function IconTransitionToggle({
 
 	// 現在の状態に応じたtooltipテキストを取得
 	const currentTooltip = isToggled ? toggledTooltip : tooltip;
+
+	// 自動リセット機能: isToggledがtrueになったら指定時間後に元に戻す
+	useEffect(() => {
+		if (isToggled && autoResetTimeout) {
+			const timer = setTimeout(() => {
+				onToggle();
+			}, autoResetTimeout);
+
+			// クリーンアップ: コンポーネントがアンマウントされるか、依存関係が変わったらタイマーをクリア
+			return () => clearTimeout(timer);
+		}
+	}, [isToggled, autoResetTimeout, onToggle]);
 
 	// Tooltipの表示制御（クリック時に再表示して内容を更新）
 	const [isTooltipOpen, setIsTooltipOpen] = useState(false);

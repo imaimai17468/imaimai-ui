@@ -253,19 +253,20 @@ export default function Example() {
 			isToggled: false,
 		},
 		codeExample: `import { IconTransitionToggle } from "@/components/icon-transition-toggle";
-import { Heart, Check, X } from "lucide-react";
+import { Copy, CircleCheck } from "lucide-react";
 import { useState } from "react";
 
 export default function Example() {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   return (
     <IconTransitionToggle
-      icon={Heart}
-      toggledIcon={Heart}
-      isToggled={isLiked}
-      onToggle={() => setIsLiked(!isLiked)}
-      aria-label="いいね"
+      icon={Copy}
+      toggledIcon={CircleCheck}
+      isToggled={isCopied}
+      onToggle={() => setIsCopied(!isCopied)}
+      autoResetTimeout={2000}
+      aria-label="コピー"
     />
   );
 }`,
@@ -354,6 +355,13 @@ export default function Example() {
 				type: "string",
 				required: false,
 				description: "トグル後にホバー時に表示するtooltipテキスト。",
+			},
+			{
+				name: "autoResetTimeout",
+				type: "number",
+				required: false,
+				description:
+					"トグル後、自動で元に戻るまでのミリ秒（例: 2000 = 2秒後）。指定しない場合は自動リセットしない。",
 			},
 		],
 		dependencies: ["framer-motion", "lucide-react"],

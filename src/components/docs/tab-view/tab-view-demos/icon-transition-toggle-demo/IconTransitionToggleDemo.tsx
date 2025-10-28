@@ -30,6 +30,9 @@ export function IconTransitionToggleDemo() {
 	// Tooltip
 	const [isCopied11, setIsCopied11] = useState<boolean>(false);
 
+	// Auto Reset
+	const [isCopied12, setIsCopied12] = useState<boolean>(false);
+
 	return (
 		<div className="space-y-8">
 			{/* 比較デモ */}
@@ -196,6 +199,23 @@ export function IconTransitionToggleDemo() {
 						onToggle={() => setIsCopied11(!isCopied11)}
 						tooltip="コピーする"
 						toggledTooltip="コピーしました"
+						aria-label="コピー"
+					/>
+				</DemoCard>
+			</DemoSection>
+
+			{/* Auto Reset デモ */}
+			<DemoSection
+				title="Auto Reset"
+				description="autoResetTimeout props を指定すると、トグル後に自動的に元の状態に戻ります。0.5秒後に自動でリセットされる例です。"
+			>
+				<DemoCard centered>
+					<IconTransitionToggle
+						icon={Copy}
+						toggledIcon={CircleCheck}
+						isToggled={isCopied12}
+						onToggle={() => setIsCopied12(!isCopied12)}
+						autoResetTimeout={500}
 						aria-label="コピー"
 					/>
 				</DemoCard>
