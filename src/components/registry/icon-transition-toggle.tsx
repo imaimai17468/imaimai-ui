@@ -4,6 +4,7 @@ import type { VariantProps } from "class-variance-authority";
 import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
+import { useState } from "react";
 import { Button, type buttonVariants } from "@/components/ui/button";
 import {
 	Tooltip,
@@ -90,13 +91,27 @@ export function IconTransitionToggle({
 	// 現在の状態に応じたtooltipテキストを取得
 	const currentTooltip = isToggled ? toggledTooltip : tooltip;
 
+	// Tooltipの表示制御（クリック時に再表示して内容を更新）
+	const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+
+	// クリック時の処理
+	const handleToggle = () => {
+		// Tooltipを一瞬閉じて再度開くことで内容を更新
+		setIsTooltipOpen(false);
+		onToggle();
+		// 次のフレームでTooltipを再表示
+		setTimeout(() => setIsTooltipOpen(true), 0);
+	};
+
 	// Button要素を定義
 	const button = (
 		<Button
 			type="button"
 			variant={variant}
 			size="icon"
-			onClick={onToggle}
+			onClick={currentTooltip ? handleToggle : onToggle}
+			onMouseEnter={() => currentTooltip && setIsTooltipOpen(true)}
+			onMouseLeave={() => currentTooltip && setIsTooltipOpen(false)}
 			className={cn(
 				"transition-transform active:scale-[0.97]",
 				sizeClassName,
@@ -158,9 +173,9 @@ export function IconTransitionToggle({
 		return button;
 	}
 
-	// tooltipがある場合はTooltipでラップ
+	// tooltipがある場合はTooltipでラップ（controlled mode）
 	return (
-		<Tooltip>
+		<Tooltip open={isTooltipOpen} onOpenChange={setIsTooltipOpen}>
 			<TooltipTrigger asChild>{button}</TooltipTrigger>
 			<TooltipContent>
 				<p>{currentTooltip}</p>
