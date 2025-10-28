@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type * as React from "react";
 import { Button, type buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export interface IconTransitionToggleProps
 	extends Omit<
@@ -57,6 +58,7 @@ export function IconTransitionToggle({
 	iconSize = 24,
 	variant = "ghost",
 	size = "icon",
+	className,
 	...props
 }: IconTransitionToggleProps) {
 	return (
@@ -65,6 +67,7 @@ export function IconTransitionToggle({
 			variant={variant}
 			size={size}
 			onClick={onToggle}
+			className={cn("[&_svg]:!text-current", className)}
 			{...props}
 		>
 			<div className="relative" style={{ width: iconSize, height: iconSize }}>
