@@ -27,6 +27,10 @@ export function IconTransitionToggleDemo() {
 	const [isCopied9, setIsCopied9] = useState<boolean>(false);
 	const [isCopied10, setIsCopied10] = useState<boolean>(false);
 
+	// Tooltip
+	const [isCopied11, setIsCopied11] = useState<boolean>(false);
+	const [isCopied12, setIsCopied12] = useState<boolean>(false);
+
 	return (
 		<div className="space-y-8">
 			{/* 比較デモ */}
@@ -43,8 +47,6 @@ export function IconTransitionToggleDemo() {
 								toggledIcon={CircleCheck}
 								isToggled={isCopied1}
 								onToggle={() => setIsCopied1(!isCopied1)}
-								tooltip="コピーする"
-								toggledTooltip="コピーしました"
 								aria-label="コピー"
 							/>
 							<div className="text-muted-foreground text-sm">
@@ -177,6 +179,42 @@ export function IconTransitionToggleDemo() {
 								aria-label="コピー"
 							/>
 							<div className="text-muted-foreground text-xs">lg</div>
+						</div>
+					</div>
+				</DemoCard>
+			</DemoSection>
+
+			{/* Tooltip デモ */}
+			<DemoSection
+				title="Tooltip"
+				description="tooltip と toggledTooltip props でホバー時のツールチップを設定。トグル状態に応じて異なるテキストを表示できます。"
+			>
+				<DemoCard centered>
+					<div className="flex items-center justify-center gap-12">
+						{/* tooltip有り */}
+						<div className="flex flex-col items-center gap-4">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied11}
+								onToggle={() => setIsCopied11(!isCopied11)}
+								tooltip="コピーする"
+								toggledTooltip="コピーしました"
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-sm">tooltip有り</div>
+						</div>
+
+						{/* tooltip無し */}
+						<div className="flex flex-col items-center gap-4">
+							<IconTransitionToggle
+								icon={Copy}
+								toggledIcon={CircleCheck}
+								isToggled={isCopied12}
+								onToggle={() => setIsCopied12(!isCopied12)}
+								aria-label="コピー"
+							/>
+							<div className="text-muted-foreground text-sm">tooltip無し</div>
 						</div>
 					</div>
 				</DemoCard>
