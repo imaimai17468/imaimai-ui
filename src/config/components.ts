@@ -242,6 +242,131 @@ export default function Example() {
 		],
 		registryDependencies: ["pagination"],
 	},
+	{
+		slug: "icon-transition-toggle",
+		name: "Icon Transition Toggle",
+		category: "feedback",
+		description:
+			"アイコン切り替え時に滑らかなトランジションを持つトグルボタン。opacity、blur、scaleを組み合わせた自然なアニメーションです。",
+		registryName: "icon-transition-toggle",
+		demoProps: {
+			isToggled: false,
+		},
+		codeExample: `import { IconTransitionToggle } from "@/components/icon-transition-toggle";
+import { Copy, CircleCheck } from "lucide-react";
+import { useState } from "react";
+
+export default function Example() {
+  const [isCopied, setIsCopied] = useState(false);
+
+  return (
+    <IconTransitionToggle
+      icon={Copy}
+      toggledIcon={CircleCheck}
+      isToggled={isCopied}
+      onToggle={() => setIsCopied(!isCopied)}
+      autoResetTimeout={2000}
+      aria-label="コピー"
+    />
+  );
+}`,
+		props: [
+			{
+				name: "icon",
+				type: "LucideIcon",
+				required: true,
+				description:
+					"最初に表示するアイコン（lucide-reactのアイコンコンポーネント）。",
+			},
+			{
+				name: "toggledIcon",
+				type: "LucideIcon",
+				required: true,
+				description:
+					"トグル時に表示するアイコン（lucide-reactのアイコンコンポーネント）。",
+			},
+			{
+				name: "isToggled",
+				type: "boolean",
+				required: true,
+				description: "現在の状態（true: toggledIcon表示、false: icon表示）。",
+			},
+			{
+				name: "onToggle",
+				type: "() => void",
+				required: true,
+				description: "トグル時に呼ばれるコールバック関数。",
+			},
+			{
+				name: "iconSize",
+				type: "number",
+				required: false,
+				default: "24",
+				description: "アイコンのサイズ（px単位）。",
+			},
+			{
+				name: "className",
+				type: "string",
+				required: false,
+				description: "ボタンに追加するCSSクラス名。",
+			},
+			{
+				name: "aria-label",
+				type: "string",
+				required: false,
+				description: "アクセシビリティ用のラベル（推奨）。",
+			},
+			{
+				name: "variant",
+				type: '"default" | "destructive" | "outline" | "secondary" | "ghost" | "link"',
+				required: false,
+				default: '"ghost"',
+				description: "ボタンのバリアント（shadcn/ui Buttonのvariant）。",
+			},
+			{
+				name: "size",
+				type: '"default" | "sm" | "lg" | "icon"',
+				required: false,
+				default: '"icon"',
+				description: "ボタンのサイズ（shadcn/ui Buttonのsize）。",
+			},
+			{
+				name: "iconProps",
+				type: "React.ComponentProps<LucideIcon>",
+				required: false,
+				description:
+					"アイコンコンポーネントに渡す追加のプロパティ（className、strokeWidthなど）。",
+			},
+			{
+				name: "toggledIconProps",
+				type: "React.ComponentProps<LucideIcon>",
+				required: false,
+				description:
+					"トグル後のアイコンコンポーネントに渡す追加のプロパティ（className、strokeWidthなど）。",
+			},
+			{
+				name: "tooltip",
+				type: "string",
+				required: false,
+				description: "ホバー時に表示するtooltipテキスト。",
+			},
+			{
+				name: "toggledTooltip",
+				type: "string",
+				required: false,
+				description: "トグル後にホバー時に表示するtooltipテキスト。",
+			},
+			{
+				name: "autoResetTimeout",
+				type: "number",
+				required: false,
+				description:
+					"トグル後、自動で元に戻るまでのミリ秒（例: 2000 = 2秒後）。指定しない場合は自動リセットしない。",
+			},
+		],
+		dependencies: ["framer-motion", "lucide-react"],
+		registryDependencies: ["button", "tooltip"],
+	},
 ];
 
 // カテゴリごとにグループ化
