@@ -1,8 +1,8 @@
 "use client";
 
 import type { VariantProps } from "class-variance-authority";
-import { AnimatePresence, motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import type * as React from "react";
 import { useEffect, useState } from "react";
 import { Button, type buttonVariants } from "@/components/ui/button";
