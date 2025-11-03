@@ -367,6 +367,101 @@ export default function Example() {
 		dependencies: ["framer-motion", "lucide-react"],
 		registryDependencies: ["button", "tooltip"],
 	},
+	{
+		slug: "image-comparison-slider",
+		name: "Image Comparison Slider",
+		category: "data-display",
+		description:
+			"2枚の画像を重ねて表示し、スライダーをドラッグして比較できるコンポーネント。ビフォーアフター比較に最適です。",
+		registryName: "image-comparison-slider",
+		demoProps: {
+			beforeImage:
+				"https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+			afterImage:
+				"https://images.unsplash.com/photo-1469474968028-56623f02e42e",
+			beforeLabel: "Before",
+			afterLabel: "After",
+		},
+		codeExample: `import { ImageComparisonSlider } from "@/components/image-comparison-slider";
+
+export default function Example() {
+  return (
+    <ImageComparisonSlider
+      beforeImage="/before.jpg"
+      afterImage="/after.jpg"
+      beforeLabel="Before"
+      afterLabel="After"
+    />
+  );
+}`,
+		props: [
+			{
+				name: "beforeImage",
+				type: "string",
+				required: true,
+				description: "1枚目の画像URL（左側・ビフォー）。",
+			},
+			{
+				name: "afterImage",
+				type: "string",
+				required: true,
+				description: "2枚目の画像URL（右側・アフター）。",
+			},
+			{
+				name: "beforeLabel",
+				type: "string",
+				required: false,
+				description: "1枚目の画像のラベル（左上に表示）。",
+			},
+			{
+				name: "afterLabel",
+				type: "string",
+				required: false,
+				description: "2枚目の画像のラベル（右上に表示）。",
+			},
+			{
+				name: "initialPosition",
+				type: "number",
+				required: false,
+				default: "50",
+				description: "初期スライダー位置（0-100のパーセンテージ）。",
+			},
+			{
+				name: "beforeAlt",
+				type: "string",
+				required: false,
+				default: '"Before image"',
+				description: "1枚目の画像のalt属性。",
+			},
+			{
+				name: "afterAlt",
+				type: "string",
+				required: false,
+				default: '"After image"',
+				description: "2枚目の画像のalt属性。",
+			},
+			{
+				name: "sliderClassName",
+				type: "string",
+				required: false,
+				description: "スライダー（縦線）に適用する追加のCSSクラス。",
+			},
+			{
+				name: "handleClassName",
+				type: "string",
+				required: false,
+				description: "ハンドル（円形ボタン）に適用する追加のCSSクラス。",
+			},
+			{
+				name: "className",
+				type: "string",
+				required: false,
+				description: "追加のCSSクラス名。",
+			},
+		],
+		dependencies: ["lucide-react"],
+		registryDependencies: [],
+	},
 ];
 
 // カテゴリごとにグループ化
