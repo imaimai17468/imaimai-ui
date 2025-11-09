@@ -1,0 +1,127 @@
+{
+  "id": "ADR-0002",
+  "timestamp": "2025-11-09T00:00:00Z",
+  "title": "Technology Stack and Dependencies",
+  "status": "accepted",
+  "context": {
+    "problem": "Select appropriate technology stack for building a shadcn/ui-compatible component registry with optimal performance and developer experience",
+    "constraints": [
+      "Must be compatible with shadcn CLI",
+      "Need server-side rendering for SEO",
+      "TypeScript for type safety",
+      "Modern React features required"
+    ],
+    "requirements": [
+      "Fast build times",
+      "Type safety",
+      "Component registry compatibility",
+      "Modern UI development workflow",
+      "Testing capabilities",
+      "Code quality tools"
+    ]
+  },
+  "decision": {
+    "summary": "Use Next.js 16, TypeScript, Tailwind CSS v4, Biome, Vitest, and Bun as the core technology stack",
+    "details": "Next.js 16 provides App Router with Server Components for optimal performance and SEO. TypeScript ensures type safety across the codebase. Tailwind CSS v4 offers modern utility-first styling. Biome replaces ESLint+Prettier for faster linting and formatting. Vitest provides fast unit testing. Bun offers faster package management and script execution. Radix UI primitives power the shadcn/ui components.",
+    "alternatives": [
+      {
+        "option": "Remix",
+        "rejected": true,
+        "reason": "Less ecosystem support and shadcn compatibility compared to Next.js"
+      },
+      {
+        "option": "ESLint + Prettier",
+        "rejected": true,
+        "reason": "Biome offers better performance and unified tooling"
+      },
+      {
+        "option": "npm/yarn/pnpm",
+        "rejected": true,
+        "reason": "Bun provides significantly faster installation and execution times"
+      }
+    ],
+    "rationale": "This stack provides the best balance of performance, developer experience, and ecosystem support. Next.js 16 is the de facto standard for React applications with SSR. Biome and Bun offer modern, faster alternatives to traditional tools.",
+    "consequences": [
+      "Excellent performance with Server Components",
+      "Strong type safety with TypeScript strict mode",
+      "Fast development workflow with Bun",
+      "Unified linting/formatting with Biome",
+      "Rich ecosystem and community support",
+      "Some dependencies on newer tools (Biome, Bun) may have limited community resources"
+    ]
+  },
+  "implementation": {
+    "affected_files": [
+      "package.json",
+      "tsconfig.json",
+      "next.config.ts",
+      "biome.json",
+      "vitest.config.mts",
+      "tailwind.config.js"
+    ],
+    "affected_components": [
+      "All components and pages"
+    ],
+    "code_patterns": [
+      "TypeScript strict mode",
+      "Next.js 16 App Router patterns",
+      "Server Components with async/await",
+      "Tailwind CSS utility classes",
+      "Radix UI primitive components",
+      "Vitest testing patterns"
+    ],
+    "examples": [
+      {
+        "file": "package.json",
+        "line_start": 19,
+        "line_end": 69,
+        "description": "Core dependencies including Next.js 16, React 19, Radix UI, Motion, and Zod"
+      },
+      {
+        "file": "tsconfig.json",
+        "line_start": 2,
+        "line_end": 12,
+        "description": "TypeScript strict mode configuration"
+      },
+      {
+        "file": "biome.json",
+        "line_start": 12,
+        "line_end": 31,
+        "description": "Biome configuration for linting and formatting"
+      }
+    ]
+  },
+  "metadata": {
+    "tags": [
+      "technology-stack",
+      "nextjs",
+      "typescript",
+      "tailwindcss",
+      "biome",
+      "vitest",
+      "bun",
+      "radix-ui"
+    ],
+    "related_adrs": [
+      "ADR-0003"
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "author": "AI Assistant",
+    "reviewers": []
+  },
+  "search_keywords": [
+    "technology stack",
+    "dependencies",
+    "nextjs",
+    "typescript",
+    "tailwind",
+    "biome",
+    "vitest",
+    "bun",
+    "framework",
+    "tooling",
+    "radix ui",
+    "shadcn"
+  ]
+}

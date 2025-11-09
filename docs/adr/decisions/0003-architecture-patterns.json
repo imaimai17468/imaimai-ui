@@ -1,0 +1,125 @@
+{
+  "id": "ADR-0003",
+  "timestamp": "2025-11-09T00:00:00Z",
+  "title": "Architecture Patterns and Code Organization",
+  "status": "accepted",
+  "context": {
+    "problem": "Establish consistent architecture patterns for component development, code organization, and maintainability in the component registry",
+    "constraints": [
+      "Next.js 16 Server Components and Client Components separation",
+      "React 19 features and patterns",
+      "Component refactoring requirements from .cursor/commands/",
+      "shadcn/ui component patterns"
+    ],
+    "requirements": [
+      "Clear separation of concerns",
+      "Reusable components",
+      "Testable code structure",
+      "Consistent patterns across codebase",
+      "Props-based component control"
+    ]
+  },
+  "decision": {
+    "summary": "Use Server Components for data fetching, Presenter Pattern for display logic, Props-based control for conditional rendering, and kebab-case/PascalCase directory structure",
+    "details": "The project uses Next.js Server Components with async/await for data fetching to eliminate client-side loading states. Display logic and conditional text are consolidated in presenter functions. All conditional rendering must be controllable via props from parent components. Components follow kebab-case directory names with PascalCase file names, and child components are nested under parent directories to reflect ownership.",
+    "alternatives": [
+      {
+        "option": "useEffect for data fetching",
+        "rejected": true,
+        "reason": "Causes client-side loading states, SEO issues, and more complex code"
+      },
+      {
+        "option": "Internal state for conditional rendering",
+        "rejected": true,
+        "reason": "Reduces component reusability and makes testing harder"
+      },
+      {
+        "option": "try-catch for all async operations",
+        "rejected": true,
+        "reason": "Prefer .then().catch() for explicit error handling and cleaner code"
+      }
+    ],
+    "rationale": "These patterns improve performance (Server Components), maintainability (Presenter Pattern), testability (Props-based control), and code organization (clear directory hierarchy). The patterns are documented in .cursor/commands/component-refactoring-specialist.md and enforced through code review.",
+    "consequences": [
+      "Better performance with Server Components",
+      "Clearer separation between UI and logic",
+      "More testable components",
+      "Easier to refactor and maintain",
+      "Clear component ownership through directory structure",
+      "Some components need to be marked as 'use client' when using React hooks"
+    ]
+  },
+  "implementation": {
+    "affected_files": [
+      "src/app/**/*.tsx",
+      "src/components/**/*.tsx",
+      ".cursor/commands/component-refactoring-specialist.md",
+      ".cursor/commands/app-code-specialist.md"
+    ],
+    "affected_components": [
+      "All page components (Server Components)",
+      "All client components with 'use client' directive",
+      "Registry components (Client Components with props control)"
+    ],
+    "code_patterns": [
+      "Server Components: async function Page() { const data = await fetchData(); }",
+      "Presenter Pattern: export const getUserStatusText = (status: string): string => {...}",
+      "Props-based control: component receives all state as props, no internal conditional state",
+      "Directory structure: parent-component/child-component/grandchild-component/",
+      "Error handling: promise.then().catch() instead of try-catch",
+      "Client Components: 'use client' directive at top of file when using React hooks"
+    ],
+    "examples": [
+      {
+        "file": "src/app/page.tsx",
+        "line_start": 18,
+        "line_end": 40,
+        "description": "Server Component with async searchParams fetching and conditional rendering"
+      },
+      {
+        "file": "src/components/registry/multi-select-combobox.tsx",
+        "line_start": 38,
+        "line_end": 62,
+        "description": "Client Component with props-based control and no internal business logic"
+      },
+      {
+        "file": "src/components/docs/tab-view/demo-card/DemoCard.tsx",
+        "description": "Child component nested under parent directory showing clear ownership"
+      }
+    ]
+  },
+  "metadata": {
+    "tags": [
+      "architecture",
+      "patterns",
+      "server-components",
+      "presenter-pattern",
+      "props-control",
+      "component-structure",
+      "nextjs",
+      "react"
+    ],
+    "related_adrs": [
+      "ADR-0001",
+      "ADR-0002"
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "author": "AI Assistant",
+    "reviewers": []
+  },
+  "search_keywords": [
+    "architecture patterns",
+    "server components",
+    "client components",
+    "presenter pattern",
+    "props control",
+    "component organization",
+    "data fetching",
+    "conditional rendering",
+    "directory structure",
+    "code patterns",
+    "refactoring",
+    "separation of concerns"
+  ]
+}

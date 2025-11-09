@@ -1,0 +1,127 @@
+{
+  "id": "ADR-0004",
+  "timestamp": "2025-11-09T00:00:00Z",
+  "title": "Domain Knowledge and Business Logic",
+  "status": "accepted",
+  "context": {
+    "problem": "Document the domain model and business logic of the imaimai-ui component registry to establish clear understanding for development",
+    "constraints": [
+      "shadcn/ui CLI compatibility requirements",
+      "Component registry format standards",
+      "User expectations for component libraries"
+    ],
+    "requirements": [
+      "Clear domain entities",
+      "Documented business rules",
+      "Understanding of user workflows",
+      "Registry compatibility"
+    ]
+  },
+  "decision": {
+    "summary": "Domain consists of Component, ComponentConfig, ComponentCategory, and Demo entities with registry-based distribution model",
+    "details": "The core domain revolves around reusable UI components that are distributed via a component registry compatible with shadcn CLI. Each Component has a ComponentConfig defining its metadata, props, dependencies, and demos. Components are categorized (form, layout, data-display, feedback) and can have multiple demo variations. The registry.json file defines the component metadata for CLI installation. Users can install components via shadcn CLI either by direct URL or by configuring the registry in their components.json.",
+    "alternatives": [
+      {
+        "option": "npm package distribution",
+        "rejected": true,
+        "reason": "Less flexible, harder to customize, and doesn't follow shadcn's copy-paste philosophy"
+      },
+      {
+        "option": "Single demo per component",
+        "rejected": true,
+        "reason": "Components often need multiple demos to showcase different use cases and variations"
+      }
+    ],
+    "rationale": "Registry-based distribution aligns with shadcn/ui philosophy of copy-paste components that users can customize. Multiple demos showcase component flexibility. Category-based organization helps users find relevant components quickly.",
+    "consequences": [
+      "Users can easily install and customize components",
+      "Components remain independent and customizable",
+      "Clear categorization aids discovery",
+      "Demo variations showcase component flexibility",
+      "Registry must be kept in sync with component code"
+    ]
+  },
+  "implementation": {
+    "affected_files": [
+      "src/config/components.ts",
+      "src/components/registry/*.tsx",
+      "registry.json",
+      "public/r/*.json",
+      "src/components/docs/tab-view/tab-view-demos/demo-registry.ts"
+    ],
+    "affected_components": [
+      "ComponentConfig type definition",
+      "Registry components (MultiSelectCombobox, EllipsisPagination, etc.)",
+      "Demo components",
+      "DocsSidebar",
+      "ComponentTabs"
+    ],
+    "code_patterns": [
+      "ComponentConfig interface with slug, name, category, props, dependencies",
+      "ComponentCategory type: 'form' | 'layout' | 'data-display' | 'feedback'",
+      "Registry JSON format matching shadcn CLI expectations",
+      "Demo registry mapping component slugs to demo components",
+      "Props interface exported alongside each component"
+    ],
+    "examples": [
+      {
+        "file": "src/config/components.ts",
+        "line_start": 2,
+        "line_end": 30,
+        "description": "ComponentConfig interface defining component metadata structure"
+      },
+      {
+        "file": "src/config/components.ts",
+        "line_start": 33,
+        "line_end": 120,
+        "description": "Example ComponentConfig for MultiSelectCombobox with full metadata"
+      },
+      {
+        "file": "registry.json",
+        "line_start": 6,
+        "line_end": 18,
+        "description": "Registry entry for multi-select-combobox following shadcn CLI format"
+      },
+      {
+        "file": "src/components/registry/multi-select-combobox.tsx",
+        "line_start": 22,
+        "line_end": 36,
+        "description": "Component with exported Props interface for type safety"
+      }
+    ]
+  },
+  "metadata": {
+    "tags": [
+      "domain",
+      "business-logic",
+      "entities",
+      "component-registry",
+      "shadcn",
+      "components",
+      "demos"
+    ],
+    "related_adrs": [
+      "ADR-0001",
+      "ADR-0002",
+      "ADR-0003"
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "author": "AI Assistant",
+    "reviewers": []
+  },
+  "search_keywords": [
+    "domain knowledge",
+    "business logic",
+    "component registry",
+    "component config",
+    "component category",
+    "shadcn cli",
+    "component metadata",
+    "props definition",
+    "demo variations",
+    "registry format",
+    "component distribution",
+    "entities"
+  ]
+}

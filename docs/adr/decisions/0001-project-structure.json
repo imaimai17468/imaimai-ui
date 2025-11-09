@@ -1,0 +1,100 @@
+{
+  "id": "ADR-0001",
+  "timestamp": "2025-11-09T00:00:00Z",
+  "title": "Project Structure and Naming Conventions",
+  "status": "accepted",
+  "context": {
+    "problem": "Establish consistent project structure and naming conventions for the imaimai-ui component registry",
+    "constraints": [
+      "Next.js 16 App Router conventions",
+      "shadcn/ui registry compatibility",
+      "TypeScript strict mode requirements"
+    ],
+    "requirements": [
+      "Clear component organization",
+      "Maintainable directory structure",
+      "Consistent naming patterns",
+      "Easy navigation for developers"
+    ]
+  },
+  "decision": {
+    "summary": "Use feature-based directory organization with kebab-case directories and PascalCase component files",
+    "details": "The project follows a feature-based organization where components are organized by their role: registry (public components), docs (documentation components), shared (common UI elements), and ui (shadcn/ui base components). Directory names use kebab-case while component files use PascalCase to match the component name.",
+    "alternatives": [
+      {
+        "option": "Flat component structure",
+        "rejected": true,
+        "reason": "Would become unmaintainable as the number of components grows"
+      },
+      {
+        "option": "Type-based organization (atoms/molecules/organisms)",
+        "rejected": true,
+        "reason": "Less intuitive for component registry use case"
+      }
+    ],
+    "rationale": "Feature-based organization provides clear separation of concerns and makes it easy to locate files. The naming convention follows React and Next.js community standards.",
+    "consequences": [
+      "Easy to locate components by feature",
+      "Clear hierarchy and ownership",
+      "Consistent with Next.js conventions",
+      "Scalable structure as components grow"
+    ]
+  },
+  "implementation": {
+    "affected_files": [
+      "src/app/**/*",
+      "src/components/**/*",
+      "src/config/**/*",
+      "src/hooks/**/*",
+      "src/lib/**/*"
+    ],
+    "affected_components": [
+      "All components in the project"
+    ],
+    "code_patterns": [
+      "kebab-case for directory names",
+      "PascalCase for component files (.tsx)",
+      "camelCase for utility files (.ts)",
+      "feature-based directory grouping"
+    ],
+    "examples": [
+      {
+        "file": "src/components/registry/multi-select-combobox.tsx",
+        "description": "Public registry component with kebab-case file name"
+      },
+      {
+        "file": "src/components/docs/tab-view/TabView.tsx",
+        "description": "Documentation component in kebab-case directory with PascalCase file"
+      },
+      {
+        "file": "src/components/shared/header/Header.tsx",
+        "description": "Shared component following directory/Component pattern"
+      }
+    ]
+  },
+  "metadata": {
+    "tags": [
+      "project-structure",
+      "naming-conventions",
+      "organization",
+      "directory-structure"
+    ],
+    "related_adrs": [
+      "ADR-0003"
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "author": "AI Assistant",
+    "reviewers": []
+  },
+  "search_keywords": [
+    "project structure",
+    "directory structure",
+    "naming conventions",
+    "file organization",
+    "kebab-case",
+    "PascalCase",
+    "component organization",
+    "feature-based structure"
+  ]
+}

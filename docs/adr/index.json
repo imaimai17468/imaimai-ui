@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "last_updated": "2025-11-09T00:00:00Z",
+  "adrs": [
+    {
+      "id": "ADR-0001",
+      "title": "Project Structure and Naming Conventions",
+      "status": "accepted",
+      "timestamp": "2025-11-09T00:00:00Z",
+      "tags": [
+        "project-structure",
+        "naming-conventions",
+        "organization",
+        "directory-structure"
+      ],
+      "keywords": [
+        "project structure",
+        "directory structure",
+        "naming conventions",
+        "file organization",
+        "kebab-case",
+        "PascalCase",
+        "component organization",
+        "feature-based structure"
+      ],
+      "affected_components": [
+        "All components in the project"
+      ],
+      "file_path": "docs/adr/decisions/0001-project-structure.json"
+    },
+    {
+      "id": "ADR-0002",
+      "title": "Technology Stack and Dependencies",
+      "status": "accepted",
+      "timestamp": "2025-11-09T00:00:00Z",
+      "tags": [
+        "technology-stack",
+        "nextjs",
+        "typescript",
+        "tailwindcss",
+        "biome",
+        "vitest",
+        "bun",
+        "radix-ui"
+      ],
+      "keywords": [
+        "technology stack",
+        "dependencies",
+        "nextjs",
+        "typescript",
+        "tailwind",
+        "biome",
+        "vitest",
+        "bun",
+        "framework",
+        "tooling",
+        "radix ui",
+        "shadcn"
+      ],
+      "affected_components": [
+        "All components and pages"
+      ],
+      "file_path": "docs/adr/decisions/0002-technology-stack.json"
+    },
+    {
+      "id": "ADR-0003",
+      "title": "Architecture Patterns and Code Organization",
+      "status": "accepted",
+      "timestamp": "2025-11-09T00:00:00Z",
+      "tags": [
+        "architecture",
+        "patterns",
+        "server-components",
+        "presenter-pattern",
+        "props-control",
+        "component-structure",
+        "nextjs",
+        "react"
+      ],
+      "keywords": [
+        "architecture patterns",
+        "server components",
+        "client components",
+        "presenter pattern",
+        "props control",
+        "component organization",
+        "data fetching",
+        "conditional rendering",
+        "directory structure",
+        "code patterns",
+        "refactoring",
+        "separation of concerns"
+      ],
+      "affected_components": [
+        "All page components (Server Components)",
+        "All client components with 'use client' directive",
+        "Registry components (Client Components with props control)"
+      ],
+      "file_path": "docs/adr/decisions/0003-architecture-patterns.json"
+    },
+    {
+      "id": "ADR-0004",
+      "title": "Domain Knowledge and Business Logic",
+      "status": "accepted",
+      "timestamp": "2025-11-09T00:00:00Z",
+      "tags": [
+        "domain",
+        "business-logic",
+        "entities",
+        "component-registry",
+        "shadcn",
+        "components",
+        "demos"
+      ],
+      "keywords": [
+        "domain knowledge",
+        "business logic",
+        "component registry",
+        "component config",
+        "component category",
+        "shadcn cli",
+        "component metadata",
+        "props definition",
+        "demo variations",
+        "registry format",
+        "component distribution",
+        "entities"
+      ],
+      "affected_components": [
+        "ComponentConfig type definition",
+        "Registry components (MultiSelectCombobox, EllipsisPagination, etc.)",
+        "Demo components",
+        "DocsSidebar",
+        "ComponentTabs"
+      ],
+      "file_path": "docs/adr/decisions/0004-domain-knowledge.json"
+    }
+  ],
+  "indices": {
+    "by_tag": {
+      "project-structure": ["ADR-0001"],
+      "naming-conventions": ["ADR-0001"],
+      "organization": ["ADR-0001"],
+      "directory-structure": ["ADR-0001"],
+      "technology-stack": ["ADR-0002"],
+      "nextjs": ["ADR-0002", "ADR-0003"],
+      "typescript": ["ADR-0002"],
+      "tailwindcss": ["ADR-0002"],
+      "biome": ["ADR-0002"],
+      "vitest": ["ADR-0002"],
+      "bun": ["ADR-0002"],
+      "radix-ui": ["ADR-0002"],
+      "architecture": ["ADR-0003"],
+      "patterns": ["ADR-0003"],
+      "server-components": ["ADR-0003"],
+      "presenter-pattern": ["ADR-0003"],
+      "props-control": ["ADR-0003"],
+      "component-structure": ["ADR-0003"],
+      "react": ["ADR-0003"],
+      "domain": ["ADR-0004"],
+      "business-logic": ["ADR-0004"],
+      "entities": ["ADR-0004"],
+      "component-registry": ["ADR-0004"],
+      "shadcn": ["ADR-0004"],
+      "components": ["ADR-0004"],
+      "demos": ["ADR-0004"]
+    },
+    "by_component": {
+      "All components in the project": ["ADR-0001"],
+      "All components and pages": ["ADR-0002"],
+      "All page components (Server Components)": ["ADR-0003"],
+      "All client components with 'use client' directive": ["ADR-0003"],
+      "Registry components (Client Components with props control)": ["ADR-0003"],
+      "ComponentConfig type definition": ["ADR-0004"],
+      "Registry components (MultiSelectCombobox, EllipsisPagination, etc.)": ["ADR-0004"],
+      "Demo components": ["ADR-0004"],
+      "DocsSidebar": ["ADR-0004"],
+      "ComponentTabs": ["ADR-0004"]
+    },
+    "by_status": {
+      "accepted": ["ADR-0001", "ADR-0002", "ADR-0003", "ADR-0004"],
+      "proposed": [],
+      "deprecated": [],
+      "superseded": []
+    }
+  }
+}
