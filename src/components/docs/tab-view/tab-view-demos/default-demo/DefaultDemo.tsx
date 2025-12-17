@@ -8,7 +8,7 @@ interface DefaultDemoProps {
  * デフォルトデモコンポーネント
  * コンポーネント固有のデモが未実装の場合に表示
  */
-export function DefaultDemo({ component }: DefaultDemoProps) {
+export function DefaultDemo(_: DefaultDemoProps) {
 	return (
 		<div className="rounded-lg border bg-card p-8">
 			<div className="mx-auto flex max-w-md items-center justify-center">
