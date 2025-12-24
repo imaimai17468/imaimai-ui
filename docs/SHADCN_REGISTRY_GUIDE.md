@@ -6,7 +6,7 @@
 
 UI コンポーネントライブラリを作成・配布する方法として、npm パッケージとして公開するのが一般的です。shadcn/ui が提唱する **Registry 方式** は、それとは異なるアプローチを提供します。どちらが優れているというわけではなく、ユースケースに応じて使い分けるのが理想です。
 
-Headless Components をベースに独自のスタイリングを施し、Registry として公開する。そしてそれを AI ツールと連携させて開発を進めるこのワークフローが、今後の UI 開発のスタンダードになる可能性を秘めています。
+shadcn/ui では `npx shadcn add button` のように CLI でコンポーネントを取得できますが、Registry を使えば**この仕組みを自分のコンポーネントライブラリでも実現できます**。つまり、`npx shadcn add @your-registry/component-name` で自作コンポーネントを配布・取得できるようになるのです。
 
 この記事では、[imaimai-ui](https://imaimai-ui.vercel.app) を具体例として、Registry 方式のメリットと実装方法を紹介します。
 
@@ -21,7 +21,19 @@ Headless Components をベースに独自のスタイリングを施し、Regist
 
 _出典: [shadcn/ui Registry ドキュメント](https://ui.shadcn.com/docs/registry)_
 
-shadcn/ui Registry は、**自分自身のコードレジストリを運用できる仕組み**です。配布できるのは UI コンポーネントだけではありません。
+shadcn/ui Registry は、**自分自身のコードレジストリを運用できる仕組み**です。shadcn CLI を使って、カスタムコンポーネントやその他のコードを配布・取得できるようになります。
+
+### 動作の仕組み
+
+Registry の動作は、以下の 3 ステップで構成されています。
+
+1. **定義** - `registry.json` にコンポーネントのメタデータ（ファイルパス、依存関係、説明文など）を JSON 形式で記述する
+2. **ビルド** - `npx shadcn build` を実行すると、CLI が `registry.json` を読み込み、各コンポーネントの JSON ファイルを `public/r/` に生成する
+3. **配布・取得** - 生成された JSON を Web サーバーで公開し、他のプロジェクトから `npx shadcn add` で取得する
+
+### 配布できるもの
+
+配布できるのは UI コンポーネントだけではありません。
 
 - React、Vue、Svelte などの UI コンポーネント
 - `useDebounce`、`formatDate` などのフックやユーティリティ
@@ -29,7 +41,11 @@ shadcn/ui Registry は、**自分自身のコードレジストリを運用で�
 - ダッシュボード、認証画面などのページテンプレート
 - コーディング規約やベストプラクティスのドキュメント
 
-重要なポイントとして、Registry は **React に限定されず、あらゆるプロジェクトタイプ・フレームワークで動作**します。
+2025 年 7 月には **Universal Registry Items** が導入され、特定のフレームワークや `components.json` の設定がなくても動作する汎用的なレジストリアイテムが作成できるようになりました。これにより React に限定されず、あらゆるプロジェクトタイプ・フレームワークで Registry を活用できます。
+
+### 依存関係の自動解決
+
+Registry の大きな特徴の一つが、**依存関係の自動解決**です。`registryDependencies` に他のレジストリのコンポーネントを指定すると、CLI が自動的にそれらを解決してインストールします。異なるレジストリ間の依存関係も自動で処理されるため、複数のレジストリを組み合わせた構成も容易に実現できます。
 
 :::message
 この記事では UI コンポーネントとデザインシステムに焦点を当てて解説しますが、上記のあらゆるコードに同じ仕組みが適用できます。
@@ -44,30 +60,6 @@ shadcn/ui Registry は、**自分自身のコードレジストリを運用で�
 | バージョン管理 | package.json で管理             | コードとして Git で管理             |
 | 依存関係       | npm の依存ツリー                | registryDependencies で明示的に管理 |
 | AI 連携        | 型定義やドキュメントを参照      | ソースコード全体を参照可能          |
-
-### Directory Registry とは
-
-shadcn/ui は公式の [Directory](https://ui.shadcn.com/docs/directory) を提供しています。Directory に登録されたレジストリは、CLI から簡単にアクセスできます。
-
-#### 分散化という思想
-
-Directory Registry の重要な特徴は、**完全に分散化**されていることです。[公式の Changelog](https://ui.shadcn.com/docs/changelog) では次のように説明されています。
-
-> The system is completely decentralized, meaning there is no central registrar, which grants users the flexibility to create any namespace and organize components in a way that best suits their team's needs.
->
-> （このシステムは完全に分散化されており、中央の登録機関が存在しない。これにより、ユーザーは自由に namespace を作成し、チームのニーズに最も適した方法でコンポーネントを整理できる。）
-
-npm のような中央集権的なパッケージレジストリとは異なり、各チームや個人が自分の Registry を自由に運用し、必要に応じて Directory に登録することで発見可能性を高めるという設計思想です。
-
-これにより、チームのニーズに最も適した方法でコンポーネントを整理でき、自分の Registry は自分で管理・運用できます。Directory への登録は任意なので、プライベートな Registry として運用することも可能です。
-
-#### 登録のメリット
-
-Directory に登録すると、他の開発者があなたのコンポーネントを見つけやすくなります。`@registry-name/component` 形式で CLI から簡単にインストールでき、MCP Server 対応により AI エージェントからもアクセス可能になります。
-
-#### 登録方法
-
-[Add a Registry](https://ui.shadcn.com/docs/registry/add-a-registry) のドキュメントに従って、プルリクエストを送信します。
 
 ## Registry 方式のメリット
 
@@ -196,6 +188,18 @@ Registry 方式と npm パッケージ方式は、どちらかが優れている
 | 社内の複数チームで統一したコンポーネントを使いたい     | 両方の併用も可能 |
 
 実際には、プリミティブなコンポーネント（Button、Input など）は npm パッケージとして提供し、それらを組み合わせた複合コンポーネント（UserAvatar、SearchForm など）は Registry として提供する、というハイブリッドなアプローチも有効です。
+
+### 従来のコピペ文化との違い
+
+「コードをコピーしてプロジェクトに取り込む」という点だけを見ると、Registry 方式は昔からあるコピペ文化と同じに見えるかもしれません。StackOverflow やブログからコードをコピーして使うのは、エンジニアなら誰でも経験があるでしょう。
+
+しかし、従来のコピペには課題がありました。どこからコピーしたか忘れてしまう。必要な依存関係がわからず動かない。元のコードが更新されても気づけない。チーム内で「あのコンポーネントどこにあったっけ」と探し回る。
+
+Registry 方式は、このコピペの良さを残しつつ課題を解決します。`registry.json` に出典が明示され、`registryDependencies` で依存関係が自動解決され、CLI で誰でも同じ手順でインストールできます。コピペを「構造化・システム化」した仕組みと言えるでしょう。
+
+さらに、Registry は組織やチームでの標準化にも適しています。「このコンポーネントを使ってください」と Slack で共有する代わりに、Registry として公開すれば、誰でも同じコマンドで同じコンポーネントを取得できます。属人的な知識の共有から、仕組みとしての共有へ移行できるのです。
+
+コードを所有できる自由さとカスタマイズの柔軟さを維持しながら、出典不明・依存関係の混乱・属人化といった従来のコピペの課題を解消しています。
 
 ## ユースケース別ガイド
 
@@ -407,6 +411,30 @@ MultiSelectComboboxProps) {
   ]
 }
 ```
+
+## Directory Registry のススメ
+
+自分の Registry を作成したら、次のステップとして shadcn/ui 公式の [Directory](https://ui.shadcn.com/docs/directory) への登録を検討してみましょう。Directory に登録されたレジストリは、CLI から簡単にアクセスできるようになります。
+
+### 分散化という思想
+
+Directory Registry の重要な特徴は、**完全に分散化**されていることです。[公式の Changelog](https://ui.shadcn.com/docs/changelog) では次のように説明されています。
+
+> The system is completely decentralized, meaning there is no central registrar, which grants users the flexibility to create any namespace and organize components in a way that best suits their team's needs.
+>
+> （このシステムは完全に分散化されており、中央の登録機関が存在しない。これにより、ユーザーは自由に namespace を作成し、チームのニーズに最も適した方法でコンポーネントを整理できる。）
+
+npm のような中央集権的なパッケージレジストリとは異なり、各チームや個人が自分の Registry を自由に運用し、必要に応じて Directory に登録することで発見可能性を高めるという設計思想です。
+
+これにより、チームのニーズに最も適した方法でコンポーネントを整理でき、自分の Registry は自分で管理・運用できます。Directory への登録は任意なので、プライベートな Registry として運用することも可能です。
+
+### 登録のメリット
+
+Directory に登録すると、他の開発者があなたのコンポーネントを見つけやすくなります。`@registry-name/component` 形式で CLI から簡単にインストールでき、MCP Server 対応により AI エージェントからもアクセス可能になります。
+
+### 登録方法
+
+[Add a Registry](https://ui.shadcn.com/docs/registry/add-a-registry) のドキュメントに従って、プルリクエストを送信します。
 
 ## まとめ
 
